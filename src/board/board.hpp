@@ -12,7 +12,16 @@ namespace conor {
 enum class Tile
 {
     wall,
-    floor
+    floor,
+    exit
+};
+
+enum class Entities
+{
+    none,
+    player,
+    goblin,
+    skieleton
 };
 
 class Board
@@ -20,7 +29,8 @@ class Board
 public:
     Board();
     void Generate();
-    std::vector < std::vector<Tile> > map{};
+    std::vector < std::vector<Tile> > dungeon_map{};
+    std::vector < std::vector<Entities> > entities_map{};
 
 private:
     constexpr static int map_heigh{100};

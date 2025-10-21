@@ -6,7 +6,7 @@
 int main()
 {
     conor::Board map{};
-    conor::Board_generator generator{100,100,&map.map};
+    conor::Board_generator generator{100,100,&map.dungeon_map,&map.entities_map};
 
     generator.Generate();
 
