@@ -1,12 +1,14 @@
 #include<iostream>
 
-#include "./player/inventory/equipment.hpp"
+#include "./board/board.hpp"
+#include "./board/board_generator.hpp"
 
 int main()
 {
-    conor::Equipment sword{"../../data/equipment/weapons/basic_sword.json"};
+    conor::Board map{};
+    conor::Board_generator generator{100,100,&map.map};
 
-    std::cout << sword.Get_discription() << '\n';
+    generator.Generate();
 
     return 0;
 }

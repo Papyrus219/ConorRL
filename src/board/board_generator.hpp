@@ -13,12 +13,15 @@ namespace conor {
  */
 class Board_generator
 {
-    Board_generator(std::vector< std::vector<Tile> > *board): assigned_board{board} {};
+public:
+    Board_generator(int map_heigh_, int map_width_, std::vector< std::vector<Tile> > *board);
     void Generate();
 
 private:
-    constexpr static int min_leaf_size{10};
-    constexpr static int max_leaf_size{20};
+    const int map_heigh{};
+    const int map_width{};
+    const static int min_leaf_size{10};
+    const static int max_leaf_size{20};
 
     struct Room
     {
@@ -29,14 +32,24 @@ private:
 
     struct Leaf
     {
+        Leaf(int x_, int y_, int width_, int heigh_);
         int x{},y{},width{},heigh{};
         Leaf* left{};
         Leaf* right{};
+        Room room{};
 
-        bool split(std::mt19937& rng);
+        bool Split(std::mt19937& rng);
+        void Create_rooms(std::mt19937 &rng);
+        void Connect_rooms(const Room& a, const Room& b);
+        Room Get_room();
+
+        static void Carve_room(const Room &room);
+        static void Crave_heigh_tunnel(int x1, int x2, int y);
+        static void Crave_width_tunnel(int y1, int y2, int x);
+        static std::vector< std::vector<Tile> > *assigned_board;
     };
 
-    std::vector< std::vector<Tile> > *assigned_board{};
+    static std::vector< std::vector<Tile> > *assigned_board;
 };
 
 }

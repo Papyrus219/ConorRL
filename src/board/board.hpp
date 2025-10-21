@@ -17,17 +17,14 @@ enum class Tile
 
 class Board
 {
+public:
     Board();
-
     void Generate();
-
-    constexpr static int map_heigh{100};
-    constexpr static int map_width{100};
-    constexpr static int min_leaf_size{10};
-    constexpr static int max_leaf_size{20};
-
     std::vector < std::vector<Tile> > map{};
 
+private:
+    constexpr static int map_heigh{100};
+    constexpr static int map_width{100};
 };
 
 }
