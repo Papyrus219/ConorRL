@@ -1,0 +1,8 @@
+{
+    "name": "Berserker",
+    "discription": "Bije mocno w huj!",
+    "type": "weapon",
+    "stat": "atack",
+    "power": 5,
+    "capacity": 3
+}

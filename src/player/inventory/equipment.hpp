@@ -1,0 +1,37 @@
+#ifndef CONOR_EQUIPMENT_HPP
+#define CONOR_EQUIPMENT_HPP
+
+
+#include <string>
+#include "./item.hpp"
+#include "../stats.hpp"
+
+namespace conor {
+
+enum class Equip_type
+{
+    weapon,
+    armor
+};
+
+Equip_type Type_from_string(std::string &s);
+Equip_type Type_from_string(std::string &&s);
+
+/**
+ * @todo write docs
+ */
+class Equipment : public Item
+{
+public:
+    Equipment(std::string &stats_path);
+    Equipment(std::string &&stats_path);
+    virtual void Use() override;
+
+    Stats boosted_stat{};
+    int boost_power{};
+    Equip_type type{};
+};
+
+}
+
+#endif // CONOR_EQUIPMENT_H

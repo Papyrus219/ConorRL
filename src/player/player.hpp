@@ -2,6 +2,8 @@
 #define CONOR_PLAYER_H
 
 #include <SFML/Graphics.hpp>
+#include "./statitics.hpp"
+#include "./inventory/item_system.hpp"
 
 namespace conor
 {
@@ -13,8 +15,13 @@ class Player
 {
 public:
     void Move(sf::Vector2i direction);
+    void Equip(Equipment item);
+    void Dequip(Equipment item);
+    Statistics stats{};
 private:
     sf::Vector2i Possition{};
+    Equipment *equiped_armor{};
+    Equipment *equiped_weapon{};
 };
 
 }
