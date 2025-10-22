@@ -1,7 +1,8 @@
 #ifndef CONOR_BOARD_HPP
 #define CONOR_BOARD_HPP
 
-#include<vector>
+#include <vector>
+#include "./tile.hpp"
 
 namespace conor {
 
@@ -9,20 +10,6 @@ namespace conor {
  * @todo write docs
  */
 
-enum class Tile
-{
-    wall,
-    floor,
-    exit
-};
-
-enum class Entities
-{
-    none,
-    player,
-    goblin,
-    skieleton
-};
 
 class Board
 {

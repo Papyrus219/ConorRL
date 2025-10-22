@@ -51,38 +51,38 @@ void conor::Board_generator::Generate()
 
     root.Add_exit(leaves);
 
-    for(int y=0; y<100; y++)
-    {
-        for(int x=0; x<100; x++)
-        {
-            switch((*assigned_board)[y][x])
-            {
-                case Tile::wall:
-                    std::cout << "#";
-                    break;
-                case Tile::exit:
-                    std::cout << "E";
-                case Tile::floor:
-                    switch((*assigned_entieties)[y][x])
-                    {
-                        case Entities::goblin:
-                            std::cout << "G";
-                            break;
-                        case Entities::skieleton:
-                            std::cout << "S";
-                            break;
-                        case Entities::player:
-                            std::cout << "P";
-                            break;
-                        case Entities::none:
-                            std::cout << ".";
-                            break;
-                    }
-                    break;
-            }
-        }
-        std::cout << '\n';
-    }
+    // for(int y=0; y<100; y++)
+    // {
+    //     for(int x=0; x<100; x++)
+    //     {
+    //         switch((*assigned_board)[y][x])
+    //         {
+    //             case Tile::wall:
+    //                 std::cout << "#";
+    //                 break;
+    //             case Tile::exit:
+    //                 std::cout << "E";
+    //             case Tile::floor:
+    //                 switch((*assigned_entieties)[y][x])
+    //                 {
+    //                     case Entities::goblin:
+    //                         std::cout << "G";
+    //                         break;
+    //                     case Entities::skieleton:
+    //                         std::cout << "S";
+    //                         break;
+    //                     case Entities::player:
+    //                         std::cout << "P";
+    //                         break;
+    //                     case Entities::none:
+    //                         std::cout << ".";
+    //                         break;
+    //                 }
+    //                 break;
+    //         }
+    //     }
+    //     std::cout << '\n';
+    // }
 }
 
 bool Board_generator::Leaf::Split(std::mt19937& rng)
