@@ -2,6 +2,7 @@
 #define CONOR_BOARD_HPP
 
 #include <vector>
+#include <SFML/System/Vector2.hpp>
 #include "./tile.hpp"
 
 namespace conor {
@@ -19,6 +20,7 @@ public:
     std::vector < std::vector<Tile> > dungeon_map{};
     std::vector < std::vector<Entities> > entities_map{};
 
+    sf::Vector2f player_possition{};
 private:
     constexpr static int map_heigh{100};
     constexpr static int map_width{100};

@@ -7,6 +7,8 @@ std::vector< std::vector<Entities> >* conor::Board_generator::assigned_entieties
 std::vector< std::vector<Tile> >* conor::Board_generator::Leaf::assigned_board{ conor::Board_generator::assigned_board };
 std::vector< std::vector<Entities> >* conor::Board_generator::Leaf::assigned_entieties{ conor::Board_generator::assigned_entieties };
 bool conor::Board_generator::Leaf::is_player{};
+sf::Vector2i conor::Board_generator::Leaf::start_player_possition{};
+sf::Vector2i* Board_generator::start_player_possition{&Board_generator::Leaf::start_player_possition};
 
 conor::Board_generator::Board_generator(int map_heigh_, int map_width_,std::vector<std::vector<Tile>>* board, std::vector< std::vector<Entities> > *entieties): map_heigh{map_heigh_}, map_width{map_width_}
 {
@@ -215,6 +217,8 @@ void conor::Board_generator::Leaf::Crave_heigh_tunnel(int x1, int x2, int y, std
         if(!is_player)
         {
             (*assigned_entieties)[y][x] = Entities::player;
+            start_player_possition = {x,y};
+
             is_player = true;
         }
 

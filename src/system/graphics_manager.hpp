@@ -2,8 +2,9 @@
 #define CONOR_GRAPHICS_MANAGER_HPP
 
 #include <SFML/Graphics.hpp>
-#include "../board/board.hpp"
+#include "../board/board_generator.hpp"
 #include "./tile_storage.hpp"
+#include "./entieties_graphics_storage.hpp"
 
 namespace conor {
 
@@ -13,20 +14,24 @@ namespace conor {
 class Graphics_manager
 {
 public:
-    Graphics_manager(Board *board);
     void Init_window(sf::Vector2u size);
     void Render();
+    void Update();
+    void Resize();
+    void Generate_map();
 
+    Board map{};
     Tile_storage tile_storage{};
+    Entieties_graphics_storage entieties_storage{};
     sf::RenderWindow window{};
 private:
+    void Set_view();
     sf::Vector2i render_area_start{};
     sf::Vector2i render_area_end{};
 
     sf::Texture tmp{};
     sf::Sprite drawer{tmp};
-    std::vector< std::vector<Tile> > *assigned_dung;
-    std::vector< std::vector<Entities> > *assigned_ent;
+    Board_generator map_generator{100,100,&map.dungeon_map,&map.entities_map};
 };
 
 }

@@ -2,6 +2,7 @@
 #define CONOR_BOARD_GENERATOR_H
 
 #include "./board.hpp"
+#include <SFML/System/Vector2.hpp>
 #include <iostream>
 #include <random>
 #include <algorithm>
@@ -44,6 +45,7 @@ private:
         void Add_exit(std::vector<Leaf*> &leafes);
         Room Get_room();
 
+        static sf::Vector2i start_player_possition;
         static void Carve_room(const Room &room, std::mt19937 &rng);
         static void Crave_heigh_tunnel(int x1, int x2, int y, std::mt19937 &rng);
         static void Crave_width_tunnel(int y1, int y2, int x, std::mt19937 &rng);
@@ -52,8 +54,11 @@ private:
         static bool is_player;
     };
 
+
     static std::vector< std::vector<Tile> > *assigned_board;
     static std::vector< std::vector<Entities> > *assigned_entieties;
+public:
+        static sf::Vector2i* start_player_possition;
 };
 
 }
