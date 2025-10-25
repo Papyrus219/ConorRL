@@ -10,7 +10,7 @@ namespace conor
 class Subject
 {
 public:
-        void Notify(Event event);
+        void Notify(Event event, Being* entity);
         void Add_observer(Observer *observer);
         void Remove_observer(Observer *observer);
 private:

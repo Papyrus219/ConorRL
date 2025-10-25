@@ -2,9 +2,9 @@
 
 void conor::Player::Move(sf::Vector2i direction)
 {
-    if(Possition.x - direction.x > 0 && Possition.y - direction.y > 0)
+    if(possition.x - direction.x > 0 && possition.y - direction.y > 0)
     {
-        Possition -= direction;
+        possition -= direction;
     }
 }
 

@@ -1,9 +1,9 @@
 #include "./subject.hpp"
 
-void conor::Subject::Notify(Event event)
+void conor::Subject::Notify(Event event, Being* entity)
 {
     for(auto observer : observers)
-        observer->onNotify(event);
+        observer->onNotify(event,entity);
 }
 
 void conor::Subject::Add_observer(Observer* observer)

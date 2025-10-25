@@ -5,7 +5,7 @@ namespace conor
 {
     enum class Event
     {
-
+        Player_moved,
     };
 }
 

@@ -2,20 +2,16 @@
 
 using namespace conor;
 
-std::vector< std::vector<Tile> > * conor::Board_generator::assigned_board{};
-std::vector< std::vector<Entities> >* conor::Board_generator::assigned_entieties{};
-std::vector< std::vector<Tile> >* conor::Board_generator::Leaf::assigned_board{ conor::Board_generator::assigned_board };
-std::vector< std::vector<Entities> >* conor::Board_generator::Leaf::assigned_entieties{ conor::Board_generator::assigned_entieties };
+Board* conor::Board_generator::assigned_map{};
+Board* conor::Board_generator::Leaf::assigned_map{};
 bool conor::Board_generator::Leaf::is_player{};
 sf::Vector2i conor::Board_generator::Leaf::start_player_possition{};
 sf::Vector2i* Board_generator::start_player_possition{&Board_generator::Leaf::start_player_possition};
 
-conor::Board_generator::Board_generator(int map_heigh_, int map_width_,std::vector<std::vector<Tile>>* board, std::vector< std::vector<Entities> > *entieties): map_heigh{map_heigh_}, map_width{map_width_}
+conor::Board_generator::Board_generator(int map_heigh_, int map_width_, Board* map_): map_heigh{map_heigh_}, map_width{map_width_}
 {
-    Board_generator::assigned_board = board;
-    Board_generator::Leaf::assigned_board = board;
-    Board_generator::assigned_entieties = entieties;
-    Board_generator::Leaf::assigned_entieties = entieties;
+    Board_generator::assigned_map = map_;
+    Board_generator::Leaf::assigned_map = map_;
 }
 
 conor::Board_generator::Leaf::Leaf(int x_, int y_, int width_, int heigh_): x{x_}, y{y_}, width{width_}, heigh{heigh_}
@@ -23,7 +19,7 @@ conor::Board_generator::Leaf::Leaf(int x_, int y_, int width_, int heigh_): x{x_
 
 }
 
-void conor::Board_generator::Generate()
+std::vector<Enemy*> conor::Board_generator::Generate(Player *&player)
 {
     std::random_device rd{};
     std::mt19937 rng{rd()};
@@ -51,40 +47,26 @@ void conor::Board_generator::Generate()
     }
     root.Create_rooms(rng);
 
-    root.Add_exit(leaves);
+    std::vector<Enemy*> enemies{};
+    for(int y=0;y<assigned_map->entities_map.size();y++)
+    {
+        for(int x=0;x<assigned_map->entities_map[0].size();x++)
+        {
+            if(assigned_map->dungeon_map[y][x] != Tile::floor) continue;
 
-    // for(int y=0; y<100; y++)
-    // {
-    //     for(int x=0; x<100; x++)
-    //     {
-    //         switch((*assigned_board)[y][x])
-    //         {
-    //             case Tile::wall:
-    //                 std::cout << "#";
-    //                 break;
-    //             case Tile::exit:
-    //                 std::cout << "E";
-    //             case Tile::floor:
-    //                 switch((*assigned_entieties)[y][x])
-    //                 {
-    //                     case Entities::goblin:
-    //                         std::cout << "G";
-    //                         break;
-    //                     case Entities::skieleton:
-    //                         std::cout << "S";
-    //                         break;
-    //                     case Entities::player:
-    //                         std::cout << "P";
-    //                         break;
-    //                     case Entities::none:
-    //                         std::cout << ".";
-    //                         break;
-    //                 }
-    //                 break;
-    //         }
-    //     }
-    //     std::cout << '\n';
-    // }
+            if(assigned_map->entities_map[y][x])
+            {
+                if(assigned_map->entities_map[y][x]->species != Being::player)
+                {
+                    enemies.push_back( static_cast<Enemy*>( assigned_map->entities_map[y][x] ) );
+                }
+            }
+        }
+    }
+
+    player = static_cast<Player*>( leaves[0]->Add_exit_and_player(leaves) );
+
+    return enemies;
 }
 
 bool Board_generator::Leaf::Split(std::mt19937& rng)
@@ -190,20 +172,20 @@ void conor::Board_generator::Leaf::Carve_room(const Room& room, std::mt19937 &rn
     {
         for(int x = room.x; x < room.x + room.width; ++x)
         {
-            (*assigned_board)[y][x] = Tile::floor;
+            assigned_map->dungeon_map[y][x] = Tile::floor;
 
             std::uniform_int_distribution<int> gen{0,30};
             if(!gen(rng))
             {
                 if(gen(rng) % 2 == 0)
                 {
-                    (*assigned_entieties)[y][x] = Entities::goblin;
+                    assigned_map->entities_map[y][x] = new Enemy{Being::goblin};
                 }
                 else
                 {
-                    (*assigned_entieties)[y][x] = Entities::skieleton;
+                    assigned_map->entities_map[y][x] = new Enemy{Being::skieleton};
                 }
-
+                assigned_map->entities_map[y][x]->possition = {y,x};
             }
         }
     }
@@ -213,17 +195,14 @@ void conor::Board_generator::Leaf::Crave_heigh_tunnel(int x1, int x2, int y, std
 {
     for(int x = std::min(x1,x2); x <= std::max(x1,x2); ++x)
     {
-        (*assigned_board)[y][x] = Tile::floor;
-        if(!is_player)
-        {
-            (*assigned_entieties)[y][x] = Entities::player;
-            start_player_possition = {x,y};
-
-            is_player = true;
-        }
+        assigned_map->dungeon_map[y][x] = Tile::floor;
 
         std::uniform_int_distribution<int> gen{0,40};
-        if(!gen(rng)) (*assigned_entieties)[y][x] = Entities::goblin;
+        if(!gen(rng))
+        {
+            assigned_map->entities_map[y][x] =  new Enemy{Being::goblin};
+            assigned_map->entities_map[y][x]->possition = {y,x};
+        }
     }
 }
 
@@ -231,14 +210,18 @@ void conor::Board_generator::Leaf::Crave_width_tunnel(int y1, int y2, int x, std
 {
     for(int y = std::min(y1,y2); y <= std::max(y1,y2); ++y)
     {
-        (*assigned_board)[y][x] = Tile::floor;
+        assigned_map->dungeon_map[y][x] = Tile::floor;
 
         std::uniform_int_distribution<int> gen{0,40};
-        if(!gen(rng)) (*assigned_entieties)[y][x] = Entities::goblin;
+        if(!gen(rng))
+        {
+            assigned_map->entities_map[y][x] = new Enemy{Being::goblin};
+            assigned_map->entities_map[y][x]->possition = {y,x};
+        }
     }
 }
 
-void conor::Board_generator::Leaf::Add_exit(std::vector<Leaf *>& leafes)
+Being* conor::Board_generator::Leaf::Add_exit_and_player(std::vector<Leaf *>& leafes)
 {
     Leaf* start_leaf = leafes.front();
     Leaf* farthest_leaf = nullptr;
@@ -260,6 +243,20 @@ void conor::Board_generator::Leaf::Add_exit(std::vector<Leaf *>& leafes)
     {
         int exit_x = farthest_leaf->room.Center_x();
         int exit_y = farthest_leaf->room.Center_y();
-        (*assigned_board)[exit_y][exit_x] = Tile::exit;
+        assigned_map->dungeon_map[exit_y][exit_x] = Tile::exit;
     }
+
+    int player_x = start_leaf->room.Center_x();
+    int player_y = start_leaf->room.Center_y();
+
+    while(assigned_map->dungeon_map[player_y][player_x] != Tile::floor)
+    {
+        player_x++;
+        player_y++;
+    }
+
+    assigned_map->entities_map[player_y][player_x] = new Player{Being::player};
+    assigned_map->entities_map[player_y][player_x]->possition = {player_y,player_x};
+
+    return assigned_map->entities_map[player_y][player_x];
 }

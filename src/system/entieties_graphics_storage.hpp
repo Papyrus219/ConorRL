@@ -19,8 +19,7 @@ public:
 private:
     sf::Texture tiles_tex{};
     sf::Vector2i tile_size{};
-    std::vector< std::vector<sf::IntRect> > tiles_tex_possitions;
-    std::vector<Entities> tiles_order{Entities::player,Entities::goblin,Entities::skieleton};
+    std::vector< std::vector<sf::IntRect> > tiles_tex_possitions{};
 };
 
 }

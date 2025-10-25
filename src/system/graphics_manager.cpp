@@ -1,22 +1,21 @@
 #include "./graphics_manager.hpp"
 #include <algorithm>
+#include <iostream>
 
 using namespace conor;
 
 void conor::Graphics_manager::Init_window(sf::Vector2u size)
 {
-    window.create(sf::VideoMode{{size.x , size.y}}, "ConorRL");
+    window.create(sf::VideoMode{{size.x , size.y}}, "ConorRL",sf::Style::Titlebar | sf::Style::Close);
     render_area_start = {0,0};
     render_area_end = {static_cast<int> (size.x/100)+1 , static_cast<int>(size.y/100)+1 };
 
     Set_view();
 }
 
-void conor::Graphics_manager::Generate_map()
+void conor::Graphics_manager::Generate_map(Player* &player, std::vector<Enemy*> &enemies)
 {
-    map_generator.Generate();
-    map.player_possition = static_cast<sf::Vector2f>( *Board_generator::start_player_possition );
-    Update();
+   enemies = map_generator.Generate(player);
 }
 
 void conor::Graphics_manager::Set_view()
@@ -53,8 +52,9 @@ void conor::Graphics_manager::Render()
     {
         for(int x = render_area_start.x; x < limiter_x; x++)
         {
-            drawer.setPosition( {tile_size.x*x, tile_size.y*y} );
-            switch(map.dungeon_map[y][x] )
+            int pos_x{x-render_area_start.x}, pos_y{y-render_area_start.y};
+            drawer.setPosition( {tile_size.x*pos_x, tile_size.y*pos_y} );
+            switch(map.dungeon_map[y][x])
             {
                 case Tile::floor:
                     tile_storage.Set_tile_to_sprite(drawer,0);
@@ -68,20 +68,10 @@ void conor::Graphics_manager::Render()
             }
             window.draw(drawer);
 
-            switch( (map.entities_map)[y][x] )
-            {
-                case Entities::player:
-                    entieties_storage.Set_tile_to_sprite(drawer,0,1);
-                    break;
-                case Entities::goblin:
-                    entieties_storage.Set_tile_to_sprite(drawer,1,2);
-                    break;
-                case Entities::skieleton:
-                    entieties_storage.Set_tile_to_sprite(drawer,2,0);
-                    break;
-                case Entities::none:
-                    break;
-            }
+            Being *to_set =  map.entities_map[y][x];
+            if(to_set) entieties_storage.Set_tile_to_sprite(drawer,to_set->species,to_set->direction);
+            else entieties_storage.Set_tile_to_sprite(drawer,0,0);
+
             window.draw(drawer);
         }
     }
@@ -99,3 +89,36 @@ void conor::Graphics_manager::Update()
 
     //TO FIX!
 }
+
+void conor::Graphics_manager::onNotify(Event event, Being* entity)
+{
+    switch(event)
+    {
+        case Event::Player_moved:
+            sf::Vector2u size = window.getSize();
+            if(entity->possition.x >= render_area_end.x)
+            {
+                render_area_end.x += static_cast<int> (size.x/100);
+                render_area_start.x += static_cast<int> (size.x/100);
+            }
+            else if(entity->possition.x < render_area_start.x)
+            {
+                render_area_end.x -= static_cast<int> (size.x/100);
+                render_area_start.x -= static_cast<int> (size.x/100);
+            }
+            else if(entity->possition.y >= render_area_end.y)
+            {
+                render_area_end.y += static_cast<int>(size.y/100);
+                render_area_start.y += static_cast<int>(size.y/100);
+            }
+            else if(entity->possition.y < render_area_start.y)
+            {
+                render_area_end.y -= static_cast<int>(size.y/100);
+                render_area_start.y -= static_cast<int>(size.y/100);
+            }
+
+            break;
+    }
+}
+
+

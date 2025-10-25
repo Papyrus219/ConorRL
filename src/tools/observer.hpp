@@ -2,6 +2,7 @@
 #define CONOR_OBSERVER_HPP
 
 #include "./event.hpp"
+#include "../being.hpp"
 
 namespace conor
 {
@@ -9,7 +10,7 @@ namespace conor
 class Observer
 {
 public:
-    virtual void onNotify(Event event);
+    virtual void onNotify(Event event, Being *entity) = 0;
     virtual ~Observer();
 };
 

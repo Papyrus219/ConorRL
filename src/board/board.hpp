@@ -4,6 +4,9 @@
 #include <vector>
 #include <SFML/System/Vector2.hpp>
 #include "./tile.hpp"
+#include "../being.hpp"
+#include "../player/player.hpp"
+#include "../enemies/enemy.hpp"
 
 namespace conor {
 
@@ -16,9 +19,9 @@ class Board
 {
 public:
     Board();
-    void Generate();
+    void Generate(Player* player, std::vector<Enemy*> &enemies);
     std::vector < std::vector<Tile> > dungeon_map{};
-    std::vector < std::vector<Entities> > entities_map{};
+    std::vector < std::vector<Being*> > entities_map{};
 
     sf::Vector2f player_possition{};
 private:

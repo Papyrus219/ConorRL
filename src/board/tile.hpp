@@ -8,12 +8,4 @@ enum class Tile
     exit=2
 };
 
-enum class Entities
-{
-    none,
-    player,
-    goblin,
-    skieleton
-};
-
 #endif

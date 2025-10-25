@@ -2,26 +2,37 @@
 #define CONOR_PLAYER_H
 
 #include <SFML/Graphics.hpp>
+#include "../being.hpp"
 #include "./statitics.hpp"
 #include "./inventory/item_system.hpp"
 
 namespace conor
 {
 
+class Input_handler;
+class Player_mover;
+
 /**
 * @todo write docs
 */
-class Player
+class Player: public Being
 {
 public:
+    Player() = default;
+    Player(Species species_): Being{species_} {};
+
     void Move(sf::Vector2i direction);
     void Equip(Equipment item);
     void Dequip(Equipment item);
+
     Statistics stats{};
 private:
-    sf::Vector2i Possition{};
     Equipment *equiped_armor{};
     Equipment *equiped_weapon{};
+    bool in_inventory{};
+
+    friend Input_handler;
+    friend Player_mover;
 };
 
 }
