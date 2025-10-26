@@ -1,13 +1,17 @@
 #ifndef CONOR_STATISTICS_HPP
 #define CONOR_STATISTICS_HPP
 
-#include "./stats.hpp"
+#include <string>
 
-namespace conor {
+namespace conor
+{
 
 struct Statistics
 {
-    int curr_healt{};
+    Statistics(std::string &stats_path);
+    Statistics(std::string &&stats_path);
+
+    int curr_health{};
     int max_health{};
     int speed{};
     int atack{};

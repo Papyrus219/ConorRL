@@ -1,7 +1,7 @@
 #ifndef CONOR_ENEMY_H
 #define CONOR_ENEMY_H
 
-#include "../being.hpp"
+#include "../being/being.hpp"
 
 namespace conor
 {

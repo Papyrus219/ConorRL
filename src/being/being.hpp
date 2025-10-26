@@ -1,7 +1,8 @@
 #ifndef CONOR_BEING_HPP
 #define CONOR_BEING_HPP
 
-#include<SFML/System/Vector2.hpp>
+#include <SFML/System/Vector2.hpp>
+#include "./statitics.hpp"
 
 namespace conor {
 
@@ -26,11 +27,15 @@ struct Being
         skieleton=3
     };
 
-    Being(Species species_): species{species_} {};
+    Being(Species species_): species{species_}, stats{" "} {};
 
     Direction direction{};
     Species species{};
     sf::Vector2i possition{};
+    Statistics stats;
+
+private:
+
 };
 
 }

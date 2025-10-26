@@ -54,6 +54,7 @@ void conor::Graphics_manager::Render()
         {
             int pos_x{x-render_area_start.x}, pos_y{y-render_area_start.y};
             drawer.setPosition( {tile_size.x*pos_x, tile_size.y*pos_y} );
+
             switch(map.dungeon_map[y][x])
             {
                 case Tile::floor:
@@ -68,9 +69,15 @@ void conor::Graphics_manager::Render()
             }
             window.draw(drawer);
 
-            Being *to_set =  map.entities_map[y][x];
-            if(to_set) entieties_storage.Set_tile_to_sprite(drawer,to_set->species,to_set->direction);
-            else entieties_storage.Set_tile_to_sprite(drawer,0,0);
+            if(map.entities_map[y][x])
+            {
+                Being *to_set{map.entities_map[y][x]};
+                entieties_storage.Set_tile_to_sprite(drawer,to_set->species,to_set->direction);
+            }
+            else
+            {
+                entieties_storage.Set_tile_to_sprite(drawer,0,0);
+            }
 
             window.draw(drawer);
         }

@@ -185,7 +185,7 @@ void conor::Board_generator::Leaf::Carve_room(const Room& room, std::mt19937 &rn
                 {
                     assigned_map->entities_map[y][x] = new Enemy{Being::skieleton};
                 }
-                assigned_map->entities_map[y][x]->possition = {y,x};
+                assigned_map->entities_map[y][x]->possition = {x,y};
             }
         }
     }
@@ -201,7 +201,7 @@ void conor::Board_generator::Leaf::Crave_heigh_tunnel(int x1, int x2, int y, std
         if(!gen(rng))
         {
             assigned_map->entities_map[y][x] =  new Enemy{Being::goblin};
-            assigned_map->entities_map[y][x]->possition = {y,x};
+            assigned_map->entities_map[y][x]->possition = {x,y};
         }
     }
 }
@@ -216,7 +216,7 @@ void conor::Board_generator::Leaf::Crave_width_tunnel(int y1, int y2, int x, std
         if(!gen(rng))
         {
             assigned_map->entities_map[y][x] = new Enemy{Being::goblin};
-            assigned_map->entities_map[y][x]->possition = {y,x};
+            assigned_map->entities_map[y][x]->possition = {x,y};
         }
     }
 }

@@ -4,8 +4,7 @@
 
 #include <string>
 #include "./item.hpp"
-#include "../stats.hpp"
-
+#include "../../being/stats.hpp"
 namespace conor {
 
 enum class Equip_type

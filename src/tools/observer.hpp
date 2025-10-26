@@ -2,7 +2,7 @@
 #define CONOR_OBSERVER_HPP
 
 #include "./event.hpp"
-#include "../being.hpp"
+#include "../being/being.hpp"
 
 namespace conor
 {

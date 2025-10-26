@@ -4,7 +4,6 @@
 #include <vector>
 #include <SFML/System/Vector2.hpp>
 #include "./tile.hpp"
-#include "../being.hpp"
 #include "../player/player.hpp"
 #include "../enemies/enemy.hpp"
 

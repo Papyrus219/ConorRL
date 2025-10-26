@@ -24,11 +24,10 @@ int main()
     handler.mover->subject.Add_observer( &renderer );
     handler.mover->subject.Add_observer( &path_finder );
 
-    renderer.Init_window({1500,1500});
+    renderer.Init_window({1000,1000});
 
     while(renderer.window.isOpen())
     {
-        renderer.Render();
         while(const std::optional event = renderer.window.pollEvent() )
         {
             if (event->is<sf::Event::Closed>())
@@ -45,6 +44,8 @@ int main()
                 handler.Handle_input_broad(key);
             }
         }
+
+        renderer.Render();
     }
 
     return 0;

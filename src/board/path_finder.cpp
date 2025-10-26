@@ -36,7 +36,7 @@ void conor::Path_finder::Update_distances(Player* player)
 
     while(!queue.empty())
     {
-        auto [x,y] = queue.front();
+        auto [y,x] = queue.front();
         for(int i=0;i<4;i++)
         {
             int mov_y{y + moves[i].first};
@@ -44,6 +44,7 @@ void conor::Path_finder::Update_distances(Player* player)
 
             if(mov_y >= assign_board->dungeon_map.size() || mov_y < 0) continue;
             if(mov_x >= assign_board->dungeon_map[0].size() || mov_x < 0) continue;
+            if(assign_board->dungeon_map[mov_y][mov_x] != Tile::floor) continue;
 
             if(distans[mov_y][mov_x] == -1)
             {
@@ -76,7 +77,17 @@ void conor::Path_finder::Move_enemies()
             if (mov_y < 0 || mov_y >= assign_board->dungeon_map.size()) continue;
             if (mov_x < 0 || mov_x >= assign_board->dungeon_map[mov_y].size()) continue;
             if(assign_board->dungeon_map[mov_y][mov_x] != Tile::floor) continue;
-            if(assign_board->entities_map[mov_y][mov_x]) continue;
+
+            if(assign_board->entities_map[mov_y][mov_x])
+            {
+                if(assign_board->entities_map[mov_y][mov_x]->species == Being::player)
+                {
+                    min_dis = -1;
+                    break;
+                }
+
+                continue;
+            }
 
             if (min_dis == -1 || distans[y + moves[min_dis].first][x + moves[min_dis].second] > distans[mov_y][mov_x])
             {
@@ -92,7 +103,22 @@ void conor::Path_finder::Move_enemies()
         assign_board->entities_map[new_y][new_x] = enemy;
         assign_board->entities_map[y][x] = nullptr;
 
-        enemy->possition = {new_y, new_x};
+        enemy->possition = { new_x,new_y};
+        switch(min_dis)
+        {
+            case 0:
+                enemy->direction = Being::right;
+                break;
+            case 1:
+                enemy->direction = Being::left;
+                break;
+            case 2:
+                enemy->direction = Being::down;
+                break;
+            case 3:
+                enemy->direction = Being::up;
+                break;
+        }
     }
 }
 

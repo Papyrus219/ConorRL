@@ -1,0 +1,8 @@
+{
+    "species": "Goblin",
+    "discription": "Zielony i duży",
+    "health": 10,
+    "atack": 3,
+    "defence": 5,
+    "speed": 7
+}

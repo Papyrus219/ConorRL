@@ -2,8 +2,8 @@
 #define CONOR_PLAYER_H
 
 #include <SFML/Graphics.hpp>
-#include "../being.hpp"
-#include "./statitics.hpp"
+#include "../being/being.hpp"
+#include "../being/statitics.hpp"
 #include "./inventory/item_system.hpp"
 
 namespace conor
@@ -24,8 +24,6 @@ public:
     void Move(sf::Vector2i direction);
     void Equip(Equipment item);
     void Dequip(Equipment item);
-
-    Statistics stats{};
 private:
     Equipment *equiped_armor{};
     Equipment *equiped_weapon{};

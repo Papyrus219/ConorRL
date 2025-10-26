@@ -4,7 +4,7 @@
 
 using namespace conor;
 
-#include "../stats.hpp"
+#include "../../being/stats.hpp"
 
 conor::Equipment::Equipment(std::string &stats_path): Item{stats_path}
 {
