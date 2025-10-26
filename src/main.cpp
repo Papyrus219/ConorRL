@@ -1,5 +1,5 @@
 #include<iostream>
-
+#include <fstream>
 #include "./player/input/input_handler.hpp"
 #include "./board/board.hpp"
 #include "./board/board_generator.hpp"
@@ -8,10 +8,11 @@
 
 int main()
 {
-    conor::Player* player{};
+    conor::Player* player;
     std::vector<conor::Enemy*> enemies{};
 
     conor::Graphics_manager renderer{};
+    renderer.Set_path_to_enemies_stats("../../data/beings");
     renderer.Generate_map(player,enemies);
     renderer.tile_storage.Set_tiles_tex("../../img/tiles/tiles.png",1,2,{16,16});
     renderer.entieties_storage.Set_tiles_tex("../../img/entieties/entieties.png",4,{16,16});

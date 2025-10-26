@@ -17,9 +17,10 @@ class Player_mover;
 */
 class Player: public Being
 {
-public:
-    Player() = default;
+public:;
     Player(Species species_): Being{species_} {};
+    Player(std::string &stats_path): Being{stats_path} {};
+    Player(std::string &&stats_path): Being{stats_path} {};
 
     void Move(sf::Vector2i direction);
     void Equip(Equipment item);

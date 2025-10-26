@@ -1,0 +1,8 @@
+{
+    "species": "skeleton",
+    "discription": "Nie je nie pije, a chodzi i bije.",
+    "health": 7,
+    "atack": 6,
+    "defence": 2,
+    "speed": 10
+}

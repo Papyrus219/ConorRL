@@ -3,6 +3,7 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
+#include <string>
 #include <random>
 #include <algorithm>
 #include "./board.hpp"
@@ -16,6 +17,7 @@ class Board_generator
 {
 public:
     Board_generator(int map_heigh_, int map_width_, Board *map_);
+    void Set_path_to_enemies_stats(std::string path_to_enemies);
     std::vector<Enemy*> Generate(Player *&player);
 
 private:
@@ -54,8 +56,11 @@ private:
     };
 
     static Board* assigned_map;
+    static std::string path_to_enemies_stats;
 public:
-        static sf::Vector2i* start_player_possition;
+    static sf::Vector2i* start_player_possition;
+
+    friend class Graphics_manager;
 };
 
 }

@@ -15,7 +15,7 @@ namespace conor
         throw std::invalid_argument("Unknow type: " + s);
     }
 
-    Stats Stats_from_string(std::string &&s)
+    Stats Stats_from_string(const std::string &&s)
     {
         if(s == "health") return Stats::health;
         if(s == "speed") return Stats::speed;

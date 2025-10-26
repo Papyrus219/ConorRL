@@ -3,15 +3,22 @@
 using namespace conor;
 
 Board* conor::Board_generator::assigned_map{};
+std::string conor::Board_generator::path_to_enemies_stats{};
 Board* conor::Board_generator::Leaf::assigned_map{};
 bool conor::Board_generator::Leaf::is_player{};
 sf::Vector2i conor::Board_generator::Leaf::start_player_possition{};
 sf::Vector2i* Board_generator::start_player_possition{&Board_generator::Leaf::start_player_possition};
 
+
 conor::Board_generator::Board_generator(int map_heigh_, int map_width_, Board* map_): map_heigh{map_heigh_}, map_width{map_width_}
 {
     Board_generator::assigned_map = map_;
     Board_generator::Leaf::assigned_map = map_;
+}
+
+void conor::Board_generator::Set_path_to_enemies_stats(std::string path_to_enemies)
+{
+    path_to_enemies_stats = path_to_enemies;
 }
 
 conor::Board_generator::Leaf::Leaf(int x_, int y_, int width_, int heigh_): x{x_}, y{y_}, width{width_}, heigh{heigh_}
@@ -179,11 +186,11 @@ void conor::Board_generator::Leaf::Carve_room(const Room& room, std::mt19937 &rn
             {
                 if(gen(rng) % 2 == 0)
                 {
-                    assigned_map->entities_map[y][x] = new Enemy{Being::goblin};
+                    assigned_map->entities_map[y][x] = new Enemy{Board_generator::path_to_enemies_stats + "/goblin.json"};
                 }
                 else
                 {
-                    assigned_map->entities_map[y][x] = new Enemy{Being::skieleton};
+                    assigned_map->entities_map[y][x] = new Enemy{Board_generator::path_to_enemies_stats + "/skeleton.json"};
                 }
                 assigned_map->entities_map[y][x]->possition = {x,y};
             }
@@ -200,7 +207,7 @@ void conor::Board_generator::Leaf::Crave_heigh_tunnel(int x1, int x2, int y, std
         std::uniform_int_distribution<int> gen{0,40};
         if(!gen(rng))
         {
-            assigned_map->entities_map[y][x] =  new Enemy{Being::goblin};
+            assigned_map->entities_map[y][x] =  new Enemy{Board_generator::path_to_enemies_stats + "/goblin.json"};
             assigned_map->entities_map[y][x]->possition = {x,y};
         }
     }
@@ -215,7 +222,7 @@ void conor::Board_generator::Leaf::Crave_width_tunnel(int y1, int y2, int x, std
         std::uniform_int_distribution<int> gen{0,40};
         if(!gen(rng))
         {
-            assigned_map->entities_map[y][x] = new Enemy{Being::goblin};
+            assigned_map->entities_map[y][x] = new Enemy{Board_generator::path_to_enemies_stats + "/goblin.json"};
             assigned_map->entities_map[y][x]->possition = {x,y};
         }
     }

@@ -14,8 +14,8 @@ enum class Stats
     defence,
 };
 
-Stats Stats_from_string(std::string &s);
-Stats Stats_from_string(std::string &&s);
+Stats Stats_from_string(const std::string &s);
+Stats Stats_from_string(const std::string &&s);
 
 }
 

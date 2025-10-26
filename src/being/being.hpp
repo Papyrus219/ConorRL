@@ -27,7 +27,10 @@ struct Being
         skieleton=3
     };
 
-    Being(Species species_): species{species_}, stats{" "} {};
+    Being() = default;
+    Being(Species species_): species{species_}, stats{} {};
+    Being(std::string &stats_path);
+    Being(std::string &&stats_path);
 
     Direction direction{};
     Species species{};
@@ -35,7 +38,8 @@ struct Being
     Statistics stats;
 
 private:
-
+    Species Spececies_from_string(const std::string &s);
+    Species Spececies_from_string(const std::string &&s);
 };
 
 }

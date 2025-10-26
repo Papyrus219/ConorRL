@@ -128,4 +128,8 @@ void conor::Graphics_manager::onNotify(Event event, Being* entity)
     }
 }
 
+void conor::Graphics_manager::Set_path_to_enemies_stats(std::string path_to_enemies)
+{
+    Board_generator::path_to_enemies_stats = path_to_enemies;
+}
 

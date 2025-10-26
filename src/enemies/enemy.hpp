@@ -13,6 +13,8 @@ class Enemy : public Being
 {
 public:
     Enemy(Being::Species species_): Being{species_} {};
+    Enemy(std::string &stats_path): Being{stats_path} {};
+    Enemy(std::string &&stats_path): Being{stats_path} {};
 };
 
 }

@@ -8,6 +8,7 @@ namespace conor
 
 struct Statistics
 {
+    Statistics() = default;
     Statistics(std::string &stats_path);
     Statistics(std::string &&stats_path);
 

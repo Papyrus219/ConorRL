@@ -21,6 +21,7 @@ public:
     void Resize();
     void onNotify(Event event, Being * entity) override;
     void Generate_map(Player* &player, std::vector<Enemy*> &enemies);
+    void Set_path_to_enemies_stats(std::string path_to_enemies);
 
     Board map{};
     Tile_storage tile_storage{};
