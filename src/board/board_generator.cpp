@@ -8,6 +8,7 @@ Board* conor::Board_generator::Leaf::assigned_map{};
 bool conor::Board_generator::Leaf::is_player{};
 sf::Vector2i conor::Board_generator::Leaf::start_player_possition{};
 sf::Vector2i* Board_generator::start_player_possition{&Board_generator::Leaf::start_player_possition};
+std::vector< std::shared_ptr<Enemy> >* Board_generator::enemies{};
 
 
 conor::Board_generator::Board_generator(int map_heigh_, int map_width_, Board* map_): map_heigh{map_heigh_}, map_width{map_width_}
@@ -55,21 +56,6 @@ std::vector< std::shared_ptr<Enemy>> conor::Board_generator::Generate( std::shar
     root.Create_rooms(rng);
 
     std::vector<std::shared_ptr<Enemy>> enemies{};
-    for(int y=0;y<assigned_map->entities_map.size();y++)
-    {
-        for(int x=0;x<assigned_map->entities_map[0].size();x++)
-        {
-            if(assigned_map->dungeon_map[y][x] != Tile::floor) continue;
-
-            if(assigned_map->entities_map[y][x])
-            {
-                if(assigned_map->entities_map[y][x]->species != Being::player)
-                {
-                    enemies.push_back( std::dynamic_pointer_cast<Enemy>(assigned_map->entities_map[y][x]));
-                }
-            }
-        }
-    }
 
     player = std::dynamic_pointer_cast<Player>( leaves[0]->Add_exit_and_player(leaves) );
 
@@ -186,13 +172,17 @@ void conor::Board_generator::Leaf::Carve_room(const Room& room, std::mt19937 &rn
             {
                 if(gen(rng) % 2 == 0)
                 {
-                    assigned_map->entities_map[y][x] = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
+                    std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
+                    assigned_map->entities_map[y][x] = new_enemy;
+                    enemies->push_back( new_enemy );
                 }
                 else
                 {
-                    assigned_map->entities_map[y][x] = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/skeleton.json");
+                    std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/skeleton.json");
+                    assigned_map->entities_map[y][x] = new_enemy;
+                    enemies->push_back( new_enemy );
                 }
-                assigned_map->entities_map[y][x]->possition = {x,y};
+                assigned_map->entities_map[y][x].lock()->possition = {x,y};
             }
         }
     }
@@ -207,8 +197,10 @@ void conor::Board_generator::Leaf::Crave_heigh_tunnel(int x1, int x2, int y, std
         std::uniform_int_distribution<int> gen{0,40};
         if(!gen(rng))
         {
-            assigned_map->entities_map[y][x] = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
-            assigned_map->entities_map[y][x]->possition = {x,y};
+            std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
+            assigned_map->entities_map[y][x] = new_enemy;
+            enemies->push_back( new_enemy );
+            assigned_map->entities_map[y][x].lock()->possition = {x,y};
         }
     }
 }
@@ -222,8 +214,10 @@ void conor::Board_generator::Leaf::Crave_width_tunnel(int y1, int y2, int x, std
         std::uniform_int_distribution<int> gen{0,40};
         if(!gen(rng))
         {
-            assigned_map->entities_map[y][x] = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
-            assigned_map->entities_map[y][x]->possition = {x,y};
+            std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
+            assigned_map->entities_map[y][x] = new_enemy;
+            enemies->push_back( new_enemy );
+            assigned_map->entities_map[y][x].lock()->possition = {x,y};
         }
     }
 }
@@ -262,8 +256,10 @@ std::shared_ptr<Being> conor::Board_generator::Leaf::Add_exit_and_player(std::ve
         player_y++;
     }
 
-    assigned_map->entities_map[player_y][player_x] = std::make_shared<Player>(path_to_enemies_stats + "/player.json");
-    assigned_map->entities_map[player_y][player_x]->possition = {player_y,player_x};
+    std::shared_ptr<Being> player = std::make_shared<Player>(path_to_enemies_stats + "/player.json");
+    assigned_map->entities_map[player_y][player_x] = player;
 
-    return assigned_map->entities_map[player_y][player_x];
+    player->possition = {player_y,player_x};
+
+    return player;
 }

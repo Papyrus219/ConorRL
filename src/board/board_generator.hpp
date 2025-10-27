@@ -1,5 +1,5 @@
-#ifndef CONOR_BOARD_GENERATOR_H
-#define CONOR_BOARD_GENERATOR_H
+#ifndef CONOR_BOARD_GENERATOR_HPP
+#define CONOR_BOARD_GENERATOR_HPP
 
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
@@ -60,10 +60,11 @@ private:
     static std::string path_to_enemies_stats;
 public:
     static sf::Vector2i* start_player_possition;
+    static std::vector< std::shared_ptr<Enemy> > *enemies;
 
     friend class Graphics_manager;
 };
 
 }
 
-#endif // CONOR_BOARD_GENERATOR_H
+#endif // CONOR_BOARD_GENERATOR_HPP

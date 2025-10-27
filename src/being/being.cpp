@@ -59,7 +59,7 @@ void conor::Being::Fight(std::shared_ptr<Being> oponent)
     if(slower->curr_health <= 0)
     {
         std::cerr << "Slower one is dead!\n";
-        oponent = nullptr;
+        oponent.reset();
         return;
     }
 

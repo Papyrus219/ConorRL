@@ -21,14 +21,14 @@ void conor::Player_mover::Move( std::shared_ptr<Player> player, sf::Vector2f dir
     {
         return;
     }
-    if( assign_board->entities_map[new_possition.y][new_possition.x])
+    if( !assign_board->entities_map[new_possition.y][new_possition.x].expired() )
     {
         assign_attack->Attack_melee(player,direction);
         return;
     }
 
     assign_board->entities_map[new_possition.y][new_possition.x] = player;
-    assign_board->entities_map[position.y][position.x] = nullptr;
+    assign_board->entities_map[position.y][position.x].reset();
 
     player->possition = new_possition;
     subject.Notify(Event::Player_moved,player);

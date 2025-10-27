@@ -20,7 +20,7 @@ class Board
 public:
     Board();
     std::vector < std::vector<Tile> > dungeon_map{};
-    std::vector < std::vector< std::shared_ptr<Being> > > entities_map{};
+    std::vector < std::vector< std::weak_ptr<Being> > > entities_map{};
 
     sf::Vector2f player_possition{};
 private:

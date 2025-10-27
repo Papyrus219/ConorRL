@@ -22,7 +22,6 @@ void conor::Path_finder::Set_enemies(std::vector< std::shared_ptr<Enemy> > &enem
     assign_enemies = &enemies;
 }
 
-
 void conor::Path_finder::Update_distances(std::shared_ptr<Player> player)
 {
     distans.clear();
@@ -82,9 +81,9 @@ void conor::Path_finder::Move_enemies()
             if (mov_x < 0 || mov_x >= assign_board->dungeon_map[mov_y].size()) continue;
             if(assign_board->dungeon_map[mov_y][mov_x] != Tile::floor) continue;
 
-            if(assign_board->entities_map[mov_y][mov_x])
+            if(!assign_board->entities_map[mov_y][mov_x].expired())
             {
-                if(assign_board->entities_map[mov_y][mov_x]->species == Being::player)
+                if(assign_board->entities_map[mov_y][mov_x].lock()->species == Being::player)
                 {
                     min_dis = -1;
                     break;
@@ -105,7 +104,7 @@ void conor::Path_finder::Move_enemies()
         int new_x = x + moves[min_dis].second;
 
         assign_board->entities_map[new_y][new_x] = enemy;
-        assign_board->entities_map[y][x] = nullptr;
+        assign_board->entities_map[y][x].reset();
 
         enemy->possition = { new_x,new_y};
         switch(min_dis)
@@ -133,6 +132,8 @@ void conor::Path_finder::onNotify(Event event, std::shared_ptr<Being> entity)
         case Event::Player_moved:
             Update_distances( std::dynamic_pointer_cast<Player>(entity) );
             Move_enemies();
+            break;
+        default:
             break;
     }
 }

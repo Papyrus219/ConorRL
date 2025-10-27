@@ -15,7 +15,8 @@ void conor::Graphics_manager::Init_window(sf::Vector2u size)
 
 void conor::Graphics_manager::Generate_map(std::shared_ptr<Player> &player, std::vector< std::shared_ptr<Enemy> > &enemies)
 {
-   enemies = map_generator.Generate(player);
+    map_generator.enemies = &enemies;
+    map_generator.Generate(player);
 }
 
 void conor::Graphics_manager::Set_view()
@@ -69,9 +70,9 @@ void conor::Graphics_manager::Render()
             }
             window.draw(drawer);
 
-            if(map.entities_map[y][x])
+            if(!map.entities_map[y][x].expired())
             {
-                auto to_set{map.entities_map[y][x]};
+                auto to_set{map.entities_map[y][x].lock()};
                 entieties_storage.Set_tile_to_sprite(drawer,to_set->species,to_set->direction);
             }
             else
