@@ -26,7 +26,7 @@ conor::Board_generator::Leaf::Leaf(int x_, int y_, int width_, int heigh_): x{x_
 
 }
 
-std::vector<Enemy*> conor::Board_generator::Generate(Player *&player)
+std::vector< std::shared_ptr<Enemy>> conor::Board_generator::Generate( std::shared_ptr<Player> &player)
 {
     std::random_device rd{};
     std::mt19937 rng{rd()};
@@ -54,7 +54,7 @@ std::vector<Enemy*> conor::Board_generator::Generate(Player *&player)
     }
     root.Create_rooms(rng);
 
-    std::vector<Enemy*> enemies{};
+    std::vector<std::shared_ptr<Enemy>> enemies{};
     for(int y=0;y<assigned_map->entities_map.size();y++)
     {
         for(int x=0;x<assigned_map->entities_map[0].size();x++)
@@ -65,13 +65,13 @@ std::vector<Enemy*> conor::Board_generator::Generate(Player *&player)
             {
                 if(assigned_map->entities_map[y][x]->species != Being::player)
                 {
-                    enemies.push_back( static_cast<Enemy*>( assigned_map->entities_map[y][x] ) );
+                    enemies.push_back( std::dynamic_pointer_cast<Enemy>(assigned_map->entities_map[y][x]));
                 }
             }
         }
     }
 
-    player = static_cast<Player*>( leaves[0]->Add_exit_and_player(leaves) );
+    player = std::dynamic_pointer_cast<Player>( leaves[0]->Add_exit_and_player(leaves) );
 
     return enemies;
 }
@@ -186,11 +186,11 @@ void conor::Board_generator::Leaf::Carve_room(const Room& room, std::mt19937 &rn
             {
                 if(gen(rng) % 2 == 0)
                 {
-                    assigned_map->entities_map[y][x] = new Enemy{Board_generator::path_to_enemies_stats + "/goblin.json"};
+                    assigned_map->entities_map[y][x] = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
                 }
                 else
                 {
-                    assigned_map->entities_map[y][x] = new Enemy{Board_generator::path_to_enemies_stats + "/skeleton.json"};
+                    assigned_map->entities_map[y][x] = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/skeleton.json");
                 }
                 assigned_map->entities_map[y][x]->possition = {x,y};
             }
@@ -207,7 +207,7 @@ void conor::Board_generator::Leaf::Crave_heigh_tunnel(int x1, int x2, int y, std
         std::uniform_int_distribution<int> gen{0,40};
         if(!gen(rng))
         {
-            assigned_map->entities_map[y][x] =  new Enemy{Board_generator::path_to_enemies_stats + "/goblin.json"};
+            assigned_map->entities_map[y][x] = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
             assigned_map->entities_map[y][x]->possition = {x,y};
         }
     }
@@ -222,13 +222,13 @@ void conor::Board_generator::Leaf::Crave_width_tunnel(int y1, int y2, int x, std
         std::uniform_int_distribution<int> gen{0,40};
         if(!gen(rng))
         {
-            assigned_map->entities_map[y][x] = new Enemy{Board_generator::path_to_enemies_stats + "/goblin.json"};
+            assigned_map->entities_map[y][x] = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
             assigned_map->entities_map[y][x]->possition = {x,y};
         }
     }
 }
 
-Being* conor::Board_generator::Leaf::Add_exit_and_player(std::vector<Leaf *>& leafes)
+std::shared_ptr<Being> conor::Board_generator::Leaf::Add_exit_and_player(std::vector<Leaf *>& leafes)
 {
     Leaf* start_leaf = leafes.front();
     Leaf* farthest_leaf = nullptr;
@@ -262,7 +262,7 @@ Being* conor::Board_generator::Leaf::Add_exit_and_player(std::vector<Leaf *>& le
         player_y++;
     }
 
-    assigned_map->entities_map[player_y][player_x] = new Player{Being::player};
+    assigned_map->entities_map[player_y][player_x] = std::make_shared<Player>(path_to_enemies_stats + "/player.json");
     assigned_map->entities_map[player_y][player_x]->possition = {player_y,player_x};
 
     return assigned_map->entities_map[player_y][player_x];

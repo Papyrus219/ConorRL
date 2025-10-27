@@ -19,8 +19,8 @@ public:
     void Render();
     void Update();
     void Resize();
-    void onNotify(Event event, Being * entity) override;
-    void Generate_map(Player* &player, std::vector<Enemy*> &enemies);
+    void onNotify(Event event, std::shared_ptr<Being> entity) override;
+    void Generate_map(std::shared_ptr<Player> &player, std::vector< std::shared_ptr<Enemy> > &enemies);
     void Set_path_to_enemies_stats(std::string path_to_enemies);
 
     Board map{};

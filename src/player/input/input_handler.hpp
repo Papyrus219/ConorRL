@@ -16,7 +16,7 @@ namespace conor
 class Input_handler
 {
 public:
-    Input_handler(Player *const &assigned_player_): assigned_player{assigned_player_} {};
+    Input_handler(const std::shared_ptr<Player> &assigned_player_): assigned_player{assigned_player_} {};
     void Handle_input_broad(sf::Keyboard::Key &key);
     void Handle_input_inventory(sf::Keyboard::Key &key);
     void Handle_input_board(sf::Keyboard::Key &key);
@@ -25,7 +25,7 @@ public:
     std::optional<Player_mover> mover;
     std::optional<Player_attacker> attacker;
 private:
-    Player *const assigned_player{};
+    const std::shared_ptr<Player> assigned_player{};
 };
 
 }

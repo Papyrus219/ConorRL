@@ -8,8 +8,8 @@
 
 int main()
 {
-    conor::Player* player;
-    std::vector<conor::Enemy*> enemies{};
+    std::shared_ptr<conor::Player> player;
+    std::vector< std::shared_ptr<conor::Enemy> > enemies{};
 
     conor::Graphics_manager renderer{};
     renderer.Set_path_to_enemies_stats("../../data/beings");

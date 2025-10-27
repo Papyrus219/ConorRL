@@ -42,3 +42,32 @@ conor::Being::Species conor::Being::Spececies_from_string(const std::string && s
 
     throw std::invalid_argument{"Unknow type: " + s};
 }
+
+void conor::Being::Fight(std::shared_ptr<Being> oponent)
+{
+    Statistics* faster = &this->stats;
+    Statistics* slower = &oponent->stats;
+
+    if(slower->speed > faster->speed)
+    {
+        std::swap(slower,faster);
+        std::cerr << "oponent is faster!\n";
+    }
+
+    slower->curr_health -= ( (faster->atack*2) - (slower->defence*3) );
+    std::cerr << slower->curr_health << '\n';
+    if(slower->curr_health <= 0)
+    {
+        std::cerr << "Slower one is dead!\n";
+        oponent = nullptr;
+        return;
+    }
+
+    faster->curr_health -= ( (slower->atack*2) - (faster->defence*3) );
+    std::cerr << faster->curr_health << '\n';
+    if(faster->curr_health <= 0)
+    {
+        std::cerr << "Slower one is dead!\n";
+        return;
+    }
+}

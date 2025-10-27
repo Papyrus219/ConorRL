@@ -15,7 +15,7 @@ class Player_mover
 {
 public:
     Player_mover(Board* board, Player_attacker* attack): assign_board{board}, assign_attack{attack} {};
-    void Move(Player *player, sf::Vector2f direction);
+    void Move(std::shared_ptr<Player> player, sf::Vector2f direction);
     Subject subject{};
 private:
     Board* assign_board{};

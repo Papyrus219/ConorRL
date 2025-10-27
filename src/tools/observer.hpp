@@ -10,7 +10,7 @@ namespace conor
 class Observer
 {
 public:
-    virtual void onNotify(Event event, Being *entity) = 0;
+    virtual void onNotify(Event event, std::shared_ptr<Being> entity) = 0;
     virtual ~Observer();
 };
 

@@ -13,7 +13,7 @@ void conor::Graphics_manager::Init_window(sf::Vector2u size)
     Set_view();
 }
 
-void conor::Graphics_manager::Generate_map(Player* &player, std::vector<Enemy*> &enemies)
+void conor::Graphics_manager::Generate_map(std::shared_ptr<Player> &player, std::vector< std::shared_ptr<Enemy> > &enemies)
 {
    enemies = map_generator.Generate(player);
 }
@@ -71,7 +71,7 @@ void conor::Graphics_manager::Render()
 
             if(map.entities_map[y][x])
             {
-                Being *to_set{map.entities_map[y][x]};
+                auto to_set{map.entities_map[y][x]};
                 entieties_storage.Set_tile_to_sprite(drawer,to_set->species,to_set->direction);
             }
             else
@@ -97,7 +97,7 @@ void conor::Graphics_manager::Update()
     //TO FIX!
 }
 
-void conor::Graphics_manager::onNotify(Event event, Being* entity)
+void conor::Graphics_manager::onNotify(Event event, std::shared_ptr<Being> entity)
 {
     switch(event)
     {

@@ -34,6 +34,9 @@ void conor::Input_handler::Handle_input_board(sf::Keyboard::Key& key)
             assigned_player->direction = Being::down;
             mover->Move(assigned_player,{0,1});
             break;
+        case Key::Space:
+            mover->Move(assigned_player,{0,0});
+            break;
         default:
             break;
     }

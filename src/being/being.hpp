@@ -2,6 +2,7 @@
 #define CONOR_BEING_HPP
 
 #include <SFML/System/Vector2.hpp>
+#include <memory>
 #include "./statitics.hpp"
 
 namespace conor {
@@ -32,11 +33,14 @@ struct Being
     Being(std::string &stats_path);
     Being(std::string &&stats_path);
 
+    void Fight( std::shared_ptr<Being> oponent);
+
     Direction direction{};
     Species species{};
     sf::Vector2i possition{};
     Statistics stats;
 
+    virtual ~Being() = default;
 private:
     Species Spececies_from_string(const std::string &s);
     Species Spececies_from_string(const std::string &&s);

@@ -2,6 +2,7 @@
 #define CONOR_BOARD_HPP
 
 #include <vector>
+#include <memory>
 #include <SFML/System/Vector2.hpp>
 #include "./tile.hpp"
 #include "../player/player.hpp"
@@ -18,9 +19,8 @@ class Board
 {
 public:
     Board();
-    void Generate(Player* player, std::vector<Enemy*> &enemies);
     std::vector < std::vector<Tile> > dungeon_map{};
-    std::vector < std::vector<Being*> > entities_map{};
+    std::vector < std::vector< std::shared_ptr<Being> > > entities_map{};
 
     sf::Vector2f player_possition{};
 private:

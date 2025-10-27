@@ -1,0 +1,8 @@
+{
+    "species": "player",
+    "discription": "Gupi.",
+    "health": 10,
+    "atack": 10,
+    "defence": 10,
+    "speed": 10
+}

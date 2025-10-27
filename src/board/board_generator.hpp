@@ -6,6 +6,7 @@
 #include <string>
 #include <random>
 #include <algorithm>
+#include <memory>
 #include "./board.hpp"
 
 namespace conor {
@@ -18,7 +19,7 @@ class Board_generator
 public:
     Board_generator(int map_heigh_, int map_width_, Board *map_);
     void Set_path_to_enemies_stats(std::string path_to_enemies);
-    std::vector<Enemy*> Generate(Player *&player);
+    std::vector< std::shared_ptr<Enemy>> Generate( std::shared_ptr<Player> &player);
 
 private:
     const int map_heigh{};
@@ -44,7 +45,7 @@ private:
         bool Split(std::mt19937& rng);
         void Create_rooms(std::mt19937 &rng);
         void Connect_rooms(const Room& a, const Room& b);
-        Being* Add_exit_and_player(std::vector<Leaf*> &leafes);
+        std::shared_ptr<Being> Add_exit_and_player(std::vector<Leaf*> &leafes);
         Room Get_room();
 
         static sf::Vector2i start_player_possition;

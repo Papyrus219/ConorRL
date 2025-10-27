@@ -2,6 +2,7 @@
 #define CONOR_SUBJECT_HPP
 
 #include <vector>
+#include <memory>
 #include "./observer.hpp"
 
 namespace conor
@@ -10,7 +11,7 @@ namespace conor
 class Subject
 {
 public:
-        void Notify(Event event, Being* entity);
+        void Notify(Event event, std::shared_ptr<Being> entity);
         void Add_observer(Observer *observer);
         void Remove_observer(Observer *observer);
 private:

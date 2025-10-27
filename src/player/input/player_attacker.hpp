@@ -3,6 +3,7 @@
 
 #include "../../board/board.hpp"
 #include "../player.hpp"
+#include <memory>
 
 namespace conor {
 
@@ -13,7 +14,7 @@ class Player_attacker
 {
 public:
     Player_attacker(Board* board): assign_board{board} {};
-    void Attack_melee(Player* player,sf::Vector2f direction);
+    void Attack_melee(std::shared_ptr<Player> player,sf::Vector2f direction);
     void Attack_range();
 private:
     Board* assign_board{};

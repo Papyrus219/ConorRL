@@ -6,7 +6,7 @@
 
 using namespace conor;
 
-conor::Path_finder::Path_finder(Board* board,std::vector<Enemy*> &enemies ): assign_board{board}, assign_enemies{&enemies}
+conor::Path_finder::Path_finder(Board* board,std::vector< std::shared_ptr<Enemy> > &enemies ): assign_board{board}, assign_enemies{&enemies}
 {
     distans.resize(board->dungeon_map.size(), std::vector<int>(board->dungeon_map[0].size(),-1) );
 }
@@ -17,13 +17,13 @@ void conor::Path_finder::Set_board(Board* board)
     distans.resize(board->dungeon_map.size(), std::vector<int>(board->dungeon_map[0].size(),-1) );
 }
 
-void conor::Path_finder::Set_enemies(std::vector<Enemy *> &enemies)
+void conor::Path_finder::Set_enemies(std::vector< std::shared_ptr<Enemy> > &enemies)
 {
     assign_enemies = &enemies;
 }
 
 
-void conor::Path_finder::Update_distances(Player* player)
+void conor::Path_finder::Update_distances(std::shared_ptr<Player> player)
 {
     distans.clear();
     distans.resize(assign_board->dungeon_map.size(), std::vector<int>(assign_board->dungeon_map[0].size(),-1) );
@@ -63,8 +63,12 @@ void conor::Path_finder::Move_enemies()
 {
     std::pair<int,int> moves[4] = { {0,1},{0,-1},{1,0},{-1,0} };
 
-    for (auto &enemy : *assign_enemies)
+    for (auto enemy_adr = assign_enemies->begin(); enemy_adr != assign_enemies->end(); enemy_adr++)
     {
+        if(!*enemy_adr) assign_enemies->erase(enemy_adr);
+
+        auto enemy = *enemy_adr;
+
         int y = enemy->possition.y;
         int x = enemy->possition.x;
         int min_dis = -1;
@@ -122,12 +126,12 @@ void conor::Path_finder::Move_enemies()
     }
 }
 
-void conor::Path_finder::onNotify(Event event, Being* entity)
+void conor::Path_finder::onNotify(Event event, std::shared_ptr<Being> entity)
 {
     switch(event)
     {
         case Event::Player_moved:
-            Update_distances( static_cast<Player*>(entity) );
+            Update_distances( std::dynamic_pointer_cast<Player>(entity) );
             Move_enemies();
             break;
     }

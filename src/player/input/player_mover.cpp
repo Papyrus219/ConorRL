@@ -2,8 +2,14 @@
 
 using namespace conor;
 
-void conor::Player_mover::Move(Player* player, sf::Vector2f direction)
+void conor::Player_mover::Move( std::shared_ptr<Player> player, sf::Vector2f direction)
 {
+    if(direction == sf::Vector2f{0,0})
+    {
+        subject.Notify(Event::Player_moved,player);
+        return;
+    }
+
     sf::Vector2f position{player->possition};
 
     sf::Vector2i new_possition = static_cast<sf::Vector2i>(position + direction);

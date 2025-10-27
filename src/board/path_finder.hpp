@@ -15,18 +15,18 @@ class Path_finder: public Observer
 {
 public:
     Path_finder() = default;
-    Path_finder(Board* board, std::vector<Enemy*> &enemies);
+    Path_finder(Board* board, std::vector< std::shared_ptr<Enemy> > &enemies);
 
     void Set_board(Board* board);
-    void Set_enemies(std::vector<Enemy*> &enemies);
-    void Update_distances(Player* player);
+    void Set_enemies(std::vector< std::shared_ptr<Enemy> > &enemies);
+    void Update_distances(std::shared_ptr<Player> player);
     void Move_enemies();
-    void onNotify(Event event, Being * entity) override;
+    void onNotify(Event event, std::shared_ptr<Being> entity) override;
 
 private:
     Board* assign_board{};
     std::vector< std::vector<int> > distans{};
-    std::vector<Enemy*> *assign_enemies{};
+    std::vector< std::shared_ptr<Enemy> > *assign_enemies{};
 };
 
 }
