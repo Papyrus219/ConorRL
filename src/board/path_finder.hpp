@@ -5,8 +5,11 @@
 #include "../player/player.hpp"
 #include "../enemies/enemy.hpp"
 #include "../tools/observer.hpp"
+#include "../tools/subject.hpp"
 
 namespace conor {
+
+class Subject;
 
 /**
  * @todo write docs
@@ -23,6 +26,7 @@ public:
     void Move_enemies();
     void onNotify(Event event, std::shared_ptr<Being> &entity) override;
 
+    Subject subject{};
 private:
     Board* assign_board{};
     std::vector< std::vector<int> > distans{};

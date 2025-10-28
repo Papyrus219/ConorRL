@@ -3,6 +3,7 @@
 #include <queue>
 #include <algorithm>
 #include <unordered_set>
+#include "../tools/subject.hpp"
 
 using namespace conor;
 
@@ -85,6 +86,20 @@ void conor::Path_finder::Move_enemies()
             {
                 if(assign_board->entities_map[mov_y][mov_x].lock()->species == Being::player)
                 {
+                    auto player = assign_board->entities_map[mov_y][mov_x].lock();
+                    std::shared_ptr<Being> by_enemy = enemy;
+                    by_enemy->Fight(player);
+
+                    if(player->stats.curr_health <= 0)
+                    {
+                        std::cout << "Fatality!\n";
+                        std::exit(0);
+                    }
+                    if(enemy->stats.curr_health <= 0)
+                    {
+                        subject.Notify(Event::Enemy_killed,by_enemy);
+                    }
+
                     min_dis = -1;
                     break;
                 }

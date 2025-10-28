@@ -2,6 +2,7 @@
 #define CONOR_ITEM_HPP
 
 #include <string>
+#include <SFML/System/Vector2.hpp>
 
 namespace conor {
 
@@ -26,6 +27,9 @@ public:
     bool operator==(const Item& other) const;
 
     virtual void Use() = 0;
+
+    sf::Vector2i possition{};
+    bool picked{};
 
     virtual ~Item();
 protected:

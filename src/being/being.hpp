@@ -13,19 +13,8 @@ namespace conor {
 
 struct Being
 {
-    enum Direction
-    {
-        up=0,
-        down=1,
-        left=2,
-        right=3
-    };
-    enum Species
-    {
-        player=1,
-        goblin=2,
-        skieleton=3
-    };
+    enum Direction{up=0,down=1,left=2,right=3};
+    enum Species{player=1,goblin=2,skieleton=3};
 
     Being() = default;
     Being(Species species_): species{species_}, stats{} {};

@@ -7,6 +7,7 @@
 #include "./tile.hpp"
 #include "../player/player.hpp"
 #include "../enemies/enemy.hpp"
+#include "../items/item.hpp"
 
 namespace conor {
 
@@ -22,6 +23,7 @@ public:
 
     std::vector < std::vector<Tile> > dungeon_map{};
     std::vector < std::vector< std::weak_ptr<Being> > > entities_map{};
+    std::vector < std::vector< std::weak_ptr<Item> > > items_map{};
 private:
     constexpr static int map_heigh{100};
     constexpr static int map_width{100};

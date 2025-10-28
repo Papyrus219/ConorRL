@@ -4,7 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "../being/being.hpp"
 #include "../being/statitics.hpp"
-#include "./inventory/item_system.hpp"
+#include "../items/inventory.hpp"
+#include "../items/equipment.hpp"
 
 namespace conor
 {
