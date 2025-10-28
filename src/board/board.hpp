@@ -19,10 +19,9 @@ class Board
 {
 public:
     Board();
+
     std::vector < std::vector<Tile> > dungeon_map{};
     std::vector < std::vector< std::weak_ptr<Being> > > entities_map{};
-
-    sf::Vector2f player_possition{};
 private:
     constexpr static int map_heigh{100};
     constexpr static int map_width{100};

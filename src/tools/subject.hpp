@@ -9,7 +9,7 @@ namespace conor
 {
 
 class Observer;
-class Being;
+struct Being;
 
 class Subject
 {

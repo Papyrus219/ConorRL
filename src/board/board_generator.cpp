@@ -6,8 +6,6 @@ Board* conor::Board_generator::assigned_map{};
 std::string conor::Board_generator::path_to_enemies_stats{};
 Board* conor::Board_generator::Leaf::assigned_map{};
 bool conor::Board_generator::Leaf::is_player{};
-sf::Vector2i conor::Board_generator::Leaf::start_player_possition{};
-sf::Vector2i* Board_generator::start_player_possition{&Board_generator::Leaf::start_player_possition};
 std::vector< std::shared_ptr<Enemy> >* Board_generator::enemies{};
 
 
@@ -260,6 +258,5 @@ std::shared_ptr<Being> conor::Board_generator::Leaf::Add_exit_and_player(std::ve
     assigned_map->entities_map[player_y][player_x] = player;
 
     player->possition = {player_y,player_x};
-
     return player;
 }

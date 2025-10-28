@@ -21,11 +21,16 @@ public:
     void Set_path_to_enemies_stats(std::string path_to_enemies);
     std::vector< std::shared_ptr<Enemy>> Generate( std::shared_ptr<Player> &player);
 
+    static std::vector< std::shared_ptr<Enemy> > *enemies;
+
 private:
     const int map_heigh{};
     const int map_width{};
     const static int min_leaf_size{10};
     const static int max_leaf_size{20};
+
+    static Board* assigned_map;
+    static std::string path_to_enemies_stats;
 
     struct Room
     {
@@ -48,19 +53,12 @@ private:
         std::shared_ptr<Being> Add_exit_and_player(std::vector<Leaf*> &leafes);
         Room Get_room();
 
-        static sf::Vector2i start_player_possition;
         static void Carve_room(const Room &room, std::mt19937 &rng);
         static void Crave_heigh_tunnel(int x1, int x2, int y, std::mt19937 &rng);
         static void Crave_width_tunnel(int y1, int y2, int x, std::mt19937 &rng);
         static Board* assigned_map;
         static bool is_player;
     };
-
-    static Board* assigned_map;
-    static std::string path_to_enemies_stats;
-public:
-    static sf::Vector2i* start_player_possition;
-    static std::vector< std::shared_ptr<Enemy> > *enemies;
 
     friend class Graphics_manager;
 };

@@ -7,7 +7,7 @@
 namespace conor
 {
 
-class Being;
+struct Being;
 
 class Observer
 {
@@ -18,4 +18,4 @@ public:
 
 }
 
-#endif
+#endif //CONOR_OBSERVER_HPP

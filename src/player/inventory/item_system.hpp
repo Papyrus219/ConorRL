@@ -3,4 +3,4 @@
 
 #include "equipment.hpp"
 
-#endif
+#endif //CONOR_ITEM_SYSTEM_HPP

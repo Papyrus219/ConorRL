@@ -2,16 +2,6 @@
 
 using namespace conor;
 
-std::vector<std::weak_ptr<Enemy>> conor::Enemies_manager::Get_enemies()
-{
-    std::vector< std::weak_ptr<Enemy> > converted{};
-
-    for(auto &enemy : enemies)
-        converted.emplace_back( enemy );
-
-    return converted;
-}
-
 void conor::Enemies_manager::Add_enemy(std::shared_ptr<Enemy>& enemy)
 {
     for(auto &en : enemies)
@@ -29,6 +19,16 @@ void conor::Enemies_manager::Remove_enemy(std::shared_ptr<Enemy>& enemy)
         else
             it++;
     }
+}
+
+std::vector<std::weak_ptr<Enemy>> conor::Enemies_manager::Get_enemies()
+{
+    std::vector< std::weak_ptr<Enemy> > converted{};
+
+    for(auto &enemy : enemies)
+        converted.emplace_back( enemy );
+
+    return converted;
 }
 
 void conor::Enemies_manager::onNotify(Event event, std::shared_ptr<Being> &entity)

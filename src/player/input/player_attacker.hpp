@@ -1,5 +1,5 @@
-#ifndef CONOR_PLAYER_ATTACKER_H
-#define CONOR_PLAYER_ATTACKER_H
+#ifndef CONOR_PLAYER_ATTACKER_HPP
+#define CONOR_PLAYER_ATTACKER_HPP
 
 #include "../../board/board.hpp"
 #include "../player.hpp"
@@ -22,4 +22,4 @@ private:
 
 }
 
-#endif // CONOR_PLAYER_ATTACKER_H
+#endif // CONOR_PLAYER_ATTACKER_HPP

@@ -1,7 +1,6 @@
 #include "./stats.hpp"
-
+#include <stdexcept>
 using namespace conor;
-#include<stdexcept>
 
 namespace conor
 {

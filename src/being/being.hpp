@@ -21,7 +21,6 @@ struct Being
         left=2,
         right=3
     };
-
     enum Species
     {
         player=1,
@@ -43,6 +42,7 @@ struct Being
     static Subject subject;
 
     virtual ~Being() = default;
+
 private:
     Species Spececies_from_string(const std::string &s);
     Species Spececies_from_string(const std::string &&s);

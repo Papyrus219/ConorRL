@@ -1,6 +1,5 @@
 #include "board.hpp"
 
-
 using namespace conor;
 
 conor::Board::Board()

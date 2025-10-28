@@ -1,7 +1,7 @@
 #ifndef CONOR_STATS_HPP
 #define CONOR_STATS_HPP
 
-#include<string>
+#include <string>
 
 namespace conor
 {

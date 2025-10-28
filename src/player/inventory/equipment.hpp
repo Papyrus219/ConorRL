@@ -13,9 +13,6 @@ enum class Equip_type
     armor
 };
 
-Equip_type Type_from_string(std::string &s);
-Equip_type Type_from_string(std::string &&s);
-
 /**
  * @todo write docs
  */
@@ -31,6 +28,9 @@ public:
     Equip_type type{};
 };
 
+Equip_type Type_from_string(std::string &s);
+Equip_type Type_from_string(std::string &&s);
+
 }
 
-#endif // CONOR_EQUIPMENT_H
+#endif // CONOR_EQUIPMENT_HPP

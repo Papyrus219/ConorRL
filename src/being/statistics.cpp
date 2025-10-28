@@ -8,19 +8,8 @@ conor::Statistics::Statistics(std::string& stats_path)
     using nlohmann::json;
     json stats_file{};
     std::ifstream file{stats_path};
-    if (!file.is_open()) {
-        std::cerr << "❌ Nie mogę otworzyć pliku: " << stats_path << std::endl;
-        throw std::runtime_error("Nie można otworzyć pliku JSON: " + stats_path);
-    }
-
-    try {
-        file >> stats_file;
-    } catch (const std::exception& e) {
-        std::cerr << "⚠️ Błąd parsowania JSON w " << stats_path << ": " << e.what() << std::endl;
-        throw;
-    }
+    file >> stats_file;
     file.close();
-
 
     max_health = stats_file["health"].get<int>();
     curr_health = max_health;
@@ -34,17 +23,7 @@ conor::Statistics::Statistics(std::string&& stats_path)
     using nlohmann::json;
     json stats_file{};
     std::ifstream file{stats_path};
-    if (!file.is_open()) {
-        std::cerr << "❌ Nie mogę otworzyć pliku: " << stats_path << std::endl;
-        throw std::runtime_error("Nie można otworzyć pliku JSON: " + stats_path);
-    }
-
-    try {
-        file >> stats_file;
-    } catch (const std::exception& e) {
-        std::cerr << "⚠️ Błąd parsowania JSON w " << stats_path << ": " << e.what() << std::endl;
-        throw;
-    }
+    file >> stats_file;
     file.close();
 
     max_health = stats_file["health"].get<int>();

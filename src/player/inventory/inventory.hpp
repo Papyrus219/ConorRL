@@ -16,10 +16,10 @@ public:
     bool Add_item(Item *item);
     bool Remove_item(Item *item);
 
-    int Get_filling();
-    int Get_items_amount();
-    const int capacity{};
+    int Get_filling() {return filling;};
+    int Get_items_amount() {return items_amount;};
 
+    const int capacity{};
 private:
     int filling{};
     int items_amount{};
@@ -28,4 +28,4 @@ private:
 
 }
 
-#endif // CONOR_INVENTORY_H
+#endif // CONOR_INVENTORY_HPP

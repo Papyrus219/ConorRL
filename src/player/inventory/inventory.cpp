@@ -25,13 +25,3 @@ bool conor::Inventory::Remove_item(conor::Item *item)
 
     return false;
 }
-
-int conor::Inventory::Get_filling()
-{
-    return filling;
-}
-
-int conor::Inventory::Get_items_amount()
-{
-    return items_amount;
-}

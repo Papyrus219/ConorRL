@@ -17,13 +17,15 @@ public:
     Item(int capacity_);
     Item(const Item &other) = default;
     Item(Item &&other) = default;
-    virtual void Use() = 0;
-    bool operator==(const Item& other) const;
 
     std::string Get_name() {return name;};
     std::string Get_discription() {return discription;};
     int Get_capacity() {return capacity;};
     int Get_id() {return id;};
+
+    bool operator==(const Item& other) const;
+
+    virtual void Use() = 0;
 
     virtual ~Item();
 protected:

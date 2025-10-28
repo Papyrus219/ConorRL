@@ -28,24 +28,6 @@ conor::Being::Being(std::string && stats_path): stats{stats_path}
     species = Spececies_from_string( stats_file["species"].get<std::string>() );
 }
 
-conor::Being::Species conor::Being::Spececies_from_string(const std::string& s)
-{
-    if(s == "player") return Species::player;
-    if(s == "goblin") return Species::goblin;
-    if(s == "skeleton") return Species::skieleton;
-
-    throw std::invalid_argument{"Unknow type: " + s};
-}
-
-conor::Being::Species conor::Being::Spececies_from_string(const std::string && s)
-{
-    if(s == "player") return Species::player;
-    if(s == "goblin") return Species::goblin;
-    if(s == "skeleton") return Species::skieleton;
-
-    throw std::invalid_argument{"Unknow type: " + s};
-}
-
 void conor::Being::Fight(std::shared_ptr<Being> oponent)
 {
     Statistics* faster = &this->stats;
@@ -74,4 +56,22 @@ void conor::Being::Fight(std::shared_ptr<Being> oponent)
         std::cerr << "Slower one is dead!\n";
         return;
     }
+}
+
+conor::Being::Species conor::Being::Spececies_from_string(const std::string& s)
+{
+    if(s == "player") return Species::player;
+    if(s == "goblin") return Species::goblin;
+    if(s == "skeleton") return Species::skieleton;
+
+    throw std::invalid_argument{"Unknow type: " + s};
+}
+
+conor::Being::Species conor::Being::Spececies_from_string(const std::string && s)
+{
+    if(s == "player") return Species::player;
+    if(s == "goblin") return Species::goblin;
+    if(s == "skeleton") return Species::skieleton;
+
+    throw std::invalid_argument{"Unknow type: " + s};
 }
