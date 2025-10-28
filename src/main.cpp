@@ -1,5 +1,3 @@
-#include<iostream>
-#include <fstream>
 #include "./player/input/input_handler.hpp"
 #include "./board/board.hpp"
 #include "./board/board_generator.hpp"
@@ -11,8 +9,6 @@ int main()
 {
     std::shared_ptr<conor::Player> player;
     conor::Enemies_manager eny_manager{};
-
-    conor::Being::subject.Add_observer(&eny_manager);
 
     conor::Graphics_manager renderer{};
     renderer.Set_path_to_enemies_stats("../../data/beings");
@@ -27,6 +23,7 @@ int main()
     handler.mover.emplace(&renderer.map, &*handler.attacker);
     handler.mover->subject.Add_observer( &renderer );
     handler.mover->subject.Add_observer( &path_finder );
+    handler.attacker->subject.Add_observer( &eny_manager );
 
     renderer.Init_window({1000,1000});
 

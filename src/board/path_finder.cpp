@@ -52,8 +52,10 @@ void conor::Path_finder::Update_distances(std::shared_ptr<Player> player)
             }
 
             distans[mov_y][mov_x] = std::min( distans[mov_y][mov_x], distans[y][x]+1 );
+
         }
 
+        if(distans[y][x] == 20) break;
         queue.pop();
     }
 }

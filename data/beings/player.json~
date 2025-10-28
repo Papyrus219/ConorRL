@@ -1,8 +1,8 @@
 {
     "species": "player",
     "discription": "Gupi.",
-    "health": 30,
+    "health": 10,
     "atack": 10,
-    "defence": 4,
-    "speed": 2
+    "defence": 10,
+    "speed": 10
 }

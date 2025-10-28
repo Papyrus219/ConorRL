@@ -13,11 +13,19 @@ void conor::Player_attacker::Attack_melee(std::shared_ptr<Player> player, sf::Ve
 
     player->Fight(assign_board->entities_map[atack_possition.y][atack_possition.x].lock());
 
-    if(!player)
+    if(assign_board->entities_map[atack_possition.y][atack_possition.x].lock()->stats.curr_health <= 0)
     {
-        player = nullptr;
-        std::cerr << "FATALITY!\n";
+        std::cerr << "Enemy down!\n";
+        auto enemy = assign_board->entities_map[atack_possition.y][atack_possition.x].lock();
+        subject.Notify(Event::Enemy_killed, enemy);
     }
+    if(player->stats.curr_health <= 0)
+    {
+        std::cerr << "FATALITY!\n";
+        std::exit(0);
+    }
+
+
 }
 
 void conor::Player_attacker::Attack_range()

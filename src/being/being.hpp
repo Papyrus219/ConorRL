@@ -4,7 +4,6 @@
 #include <SFML/System/Vector2.hpp>
 #include <memory>
 #include "./statitics.hpp"
-#include "../tools/subject.hpp"
 
 namespace conor {
 
@@ -39,7 +38,6 @@ struct Being
     Species species{};
     sf::Vector2i possition{};
     Statistics stats;
-    static Subject subject;
 
     virtual ~Being() = default;
 
