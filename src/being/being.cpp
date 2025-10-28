@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 
+conor::Subject conor::Being::subject{};
+
 conor::Being::Being(std::string& stats_path): stats{stats_path}
 {
     using nlohmann::json;

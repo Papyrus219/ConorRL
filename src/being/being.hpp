@@ -39,6 +39,7 @@ struct Being
     Species species{};
     sf::Vector2i possition{};
     Statistics stats;
+    static Subject subject;
 
     virtual ~Being() = default;
 private:
