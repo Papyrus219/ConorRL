@@ -4,6 +4,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <memory>
 #include "./statitics.hpp"
+#include "../tools/subject.hpp"
 
 namespace conor {
 

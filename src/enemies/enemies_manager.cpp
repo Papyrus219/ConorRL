@@ -31,7 +31,7 @@ void conor::Enemies_manager::Remove_enemy(std::shared_ptr<Enemy>& enemy)
     }
 }
 
-void conor::Enemies_manager::onNotify(Event event, std::shared_ptr<Being> entity)
+void conor::Enemies_manager::onNotify(Event event, std::shared_ptr<Being> &entity)
 {
     switch(event)
     {

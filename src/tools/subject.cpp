@@ -1,6 +1,7 @@
 #include "./subject.hpp"
+#include "./observer.hpp"
 
-void conor::Subject::Notify(Event event, std::shared_ptr<Being> entity)
+void conor::Subject::Notify(Event event, std::shared_ptr<Being> &entity)
 {
     for(auto observer : observers)
         observer->onNotify(event,entity);

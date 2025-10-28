@@ -1,7 +1,2 @@
 #include"./observer.hpp"
-
-conor::Observer::~Observer()
-{
-
-}
-
+#include "../being/being.hpp"

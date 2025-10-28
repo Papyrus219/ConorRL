@@ -3,15 +3,18 @@
 
 #include <vector>
 #include <memory>
-#include "./observer.hpp"
+#include "./event.hpp"
 
 namespace conor
 {
 
+class Observer;
+class Being;
+
 class Subject
 {
 public:
-        void Notify(Event event, std::shared_ptr<Being> entity);
+        void Notify(Event event, std::shared_ptr<Being> &entity);
         void Add_observer(Observer *observer);
         void Remove_observer(Observer *observer);
 private:

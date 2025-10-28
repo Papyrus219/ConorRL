@@ -6,7 +6,8 @@ void conor::Player_mover::Move( std::shared_ptr<Player> player, sf::Vector2f dir
 {
     if(direction == sf::Vector2f{0,0})
     {
-        subject.Notify(Event::Player_moved,player);
+        std::shared_ptr<Being> player_being = player;
+        subject.Notify(Event::Player_moved, player_being );
         return;
     }
 
@@ -31,5 +32,6 @@ void conor::Player_mover::Move( std::shared_ptr<Player> player, sf::Vector2f dir
     assign_board->entities_map[position.y][position.x].reset();
 
     player->possition = new_possition;
-    subject.Notify(Event::Player_moved,player);
+    std::shared_ptr<Being> player_being = player;
+    subject.Notify(Event::Player_moved,player_being);
 }

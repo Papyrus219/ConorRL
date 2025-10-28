@@ -2,6 +2,7 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <iostream>
+#include "../tools/subject.hpp"
 
 conor::Subject conor::Being::subject{};
 
@@ -61,7 +62,8 @@ void conor::Being::Fight(std::shared_ptr<Being> oponent)
     if(slower->curr_health <= 0)
     {
         std::cerr << "Slower one is dead!\n";
-        oponent.reset();
+        subject.Notify(Event::Enemy_killed,oponent);
+
         return;
     }
 
