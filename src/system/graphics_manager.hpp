@@ -3,11 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 #include "../board/board_generator.hpp"
-#include "./tile_storage.hpp"
+#include "./tile_graphics_storage.hpp"
 #include "./entieties_graphics_storage.hpp"
 #include "../tools/observer.hpp"
 
 namespace conor {
+
+class Player;
 
 /**
  * @todo write docs
@@ -17,11 +19,13 @@ class Graphics_manager: public Observer
 public:
     void Init_window(sf::Vector2u size);
     void Render();
+    void Render_inventory();
     void Update();
     void Resize();
     void onNotify(Event event, std::shared_ptr<Being> &entity) override;
     void Generate_map(std::shared_ptr<Player> &player, std::vector< std::shared_ptr<Enemy> > *enemies);
     void Set_path_to_enemies_stats(std::string path_to_enemies);
+    void Set_player(std::shared_ptr<Player> &player);
 
     Board map{};
     Tile_storage tile_storage{};
@@ -37,6 +41,8 @@ private:
     sf::Texture tmp{};
     sf::Sprite drawer{tmp};
     Board_generator map_generator{100,100,&map};
+
+    std::shared_ptr<Player> assign_player{};
 };
 
 }

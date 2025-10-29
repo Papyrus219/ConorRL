@@ -6,6 +6,8 @@
 
 namespace conor {
 
+class Player;
+
 /**
  * @todo write docs
  */
@@ -26,10 +28,17 @@ public:
 
     bool operator==(const Item& other) const;
 
-    virtual void Use() = 0;
+    virtual void Use(Player &user) = 0;
 
     sf::Vector2i possition{};
     bool picked{};
+
+    enum specialisation
+    {
+        trash = 0,
+        equipment = 1,
+        potion = 2
+    };
 
     virtual ~Item();
 protected:

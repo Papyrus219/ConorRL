@@ -2,7 +2,7 @@
 
 using namespace conor;
 
-bool conor::Inventory::Add_item(conor::Item *item)
+bool conor::Inventory::Add_item(std::shared_ptr<Item> item)
 {
     if(filling + item->Get_capacity() > capacity) return false;
 
@@ -12,7 +12,7 @@ bool conor::Inventory::Add_item(conor::Item *item)
     return true;
 }
 
-bool conor::Inventory::Remove_item(conor::Item *item)
+bool conor::Inventory::Remove_item(std::shared_ptr<Item> item)
 {
     for(auto it = items.begin(); it != items.end(); it++)
     {

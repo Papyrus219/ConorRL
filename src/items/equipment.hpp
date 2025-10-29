@@ -21,7 +21,7 @@ class Equipment : public Item
 public:
     Equipment(std::string &stats_path);
     Equipment(std::string &&stats_path);
-    virtual void Use() override;
+    virtual void Use(Player &player) override;
 
     Stats boosted_stat{};
     int boost_power{};

@@ -1,4 +1,5 @@
 #include "equipment.hpp"
+#include "../player/player.hpp"
 #include <nlohmann/json.hpp>
 #include <fstream>
 
@@ -30,9 +31,9 @@ conor::Equipment::Equipment(std::string &&stats_path): Item{stats_path}
     boost_power = stats_file["power"].get<int>();
 }
 
-void conor::Equipment::Use()
+void conor::Equipment::Use(Player &player)
 {
-
+    player.Equip(*this);
 }
 
 namespace conor

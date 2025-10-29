@@ -83,7 +83,39 @@ void conor::Graphics_manager::Render()
             window.draw(drawer);
         }
     }
+
+    if(assign_player->Get_if_in_inventory()) Render_inventory();
+
     window.display();
+}
+
+void conor::Graphics_manager::Render_inventory()
+{
+    window.setView( window.getDefaultView() );
+    sf::Vector2u size = window.getSize();
+
+    sf::RectangleShape background({size.x*0.6f, size.y*0.6f});
+    background.setFillColor(sf::Color{128,10,10,150});
+    background.setOutlineColor(sf::Color::Black);
+    background.setOutlineThickness(4.f);
+
+    background.setPosition({size.x*0.2f, size.y*0.2f});
+    window.draw(background);
+
+    sf::Font font;
+    if(font.openFromFile("../../data/fonts/font1.ttf"))
+    {
+        sf::Text title{font,"Inventory",35};
+        title.setFillColor(sf::Color::White);
+        title.setPosition( {size.x*0.22f, size.y * 0.22f} );
+        window.draw(title);
+    }
+    else
+    {
+        std::cerr << "Jesteś na steam decku!\n";
+    }
+
+    Set_view();
 }
 
 void conor::Graphics_manager::Update()
@@ -132,5 +164,10 @@ void conor::Graphics_manager::onNotify(Event event, std::shared_ptr<Being> &enti
 void conor::Graphics_manager::Set_path_to_enemies_stats(std::string path_to_enemies)
 {
     Board_generator::path_to_enemies_stats = path_to_enemies;
+}
+
+void conor::Graphics_manager::Set_player(std::shared_ptr<Player>& player)
+{
+    assign_player = player;
 }
 

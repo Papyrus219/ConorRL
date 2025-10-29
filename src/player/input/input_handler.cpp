@@ -1,4 +1,5 @@
 #include "input_handler.hpp"
+#include <iostream>
 
 void conor::Input_handler::Handle_input_broad(sf::Keyboard::Key &key)
 {
@@ -37,6 +38,10 @@ void conor::Input_handler::Handle_input_board(sf::Keyboard::Key& key)
         case Key::Space:
             mover->Move(assigned_player,{0,0});
             break;
+        case Key::I:
+            std::cerr << "Open inventory!\n";
+            assigned_player->in_inventory = true;
+            break;
         default:
             break;
     }
@@ -44,5 +49,14 @@ void conor::Input_handler::Handle_input_board(sf::Keyboard::Key& key)
 
 void conor::Input_handler::Handle_input_inventory(sf::Keyboard::Key& key)
 {
+    using sf::Keyboard::Key;
 
+    switch(key)
+    {
+        case Key::I:
+            assigned_player->in_inventory = false;
+            break;
+        default:
+            break;
+    }
 }

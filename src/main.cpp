@@ -15,6 +15,7 @@ int main()
     renderer.Generate_map(player,eny_manager.Get_enemies_ptr());
     renderer.tile_storage.Set_tiles_tex("../../img/tiles/tiles.png",1,2,{16,16});
     renderer.entieties_storage.Set_tiles_tex("../../img/entieties/entieties.png",4,{16,16});
+    renderer.Set_player(player);
 
     conor::Path_finder path_finder{&renderer.map,eny_manager.Get_enemies_ptr()};
 

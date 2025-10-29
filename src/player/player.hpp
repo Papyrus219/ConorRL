@@ -26,7 +26,11 @@ public:;
     void Move(sf::Vector2i direction);
     void Equip(Equipment item);
     void Dequip(Equipment item);
+
+    bool Get_if_in_inventory() {return in_inventory;};
+    const std::vector< std::shared_ptr<Item> > Get_inventory_const_ptr() const {return inventory.Get_items_ptr_const(); };
 private:
+    Inventory inventory{20};
     Equipment *equiped_armor{};
     Equipment *equiped_weapon{};
     bool in_inventory{};
