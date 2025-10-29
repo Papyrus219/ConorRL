@@ -33,12 +33,14 @@ public:
     sf::Vector2i possition{};
     bool picked{};
 
-    enum specialisation
+    enum Specialisation
     {
         trash = 0,
         equipment = 1,
         potion = 2
     };
+
+    Specialisation spect{};
 
     virtual ~Item();
 protected:

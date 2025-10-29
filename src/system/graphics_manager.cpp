@@ -13,9 +13,10 @@ void conor::Graphics_manager::Init_window(sf::Vector2u size)
     Set_view();
 }
 
-void conor::Graphics_manager::Generate_map(std::shared_ptr<Player> &player, std::vector< std::shared_ptr<Enemy> > *enemies)
+void conor::Graphics_manager::Generate_map(std::shared_ptr<Player> &player, std::vector< std::shared_ptr<Enemy> > *enemies, std::vector< std::shared_ptr<Item> > *items)
 {
     map_generator.enemies = enemies;
+    map_generator.items = items;
     map_generator.Generate(player);
 }
 
@@ -70,17 +71,20 @@ void conor::Graphics_manager::Render()
             }
             window.draw(drawer);
 
+            if(!map.items_map[y][x].expired())
+            {
+                auto to_set{map.items_map[y][x].lock()};
+                std::cout << "Halo: " << y << " " << x << "\n";
+                item_storage.Set_item_to_sptite(drawer,to_set);
+                window.draw(drawer);
+            }
+
             if(!map.entities_map[y][x].expired())
             {
                 auto to_set{map.entities_map[y][x].lock()};
                 entieties_storage.Set_tile_to_sprite(drawer,to_set->species,to_set->direction);
+                window.draw(drawer);
             }
-            else
-            {
-                entieties_storage.Set_tile_to_sprite(drawer,0,0);
-            }
-
-            window.draw(drawer);
         }
     }
 

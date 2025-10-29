@@ -16,6 +16,8 @@ conor::Equipment::Equipment(std::string &stats_path): Item{stats_path}
     type = Type_from_string( stats_file["type"].get<std::string>() );
     boosted_stat = Stats_from_string( stats_file["stat"].get<std::string>() );
     boost_power = stats_file["power"].get<int>();
+
+    spect = Specialisation::equipment;
 }
 
 conor::Equipment::Equipment(std::string &&stats_path): Item{stats_path}
@@ -29,6 +31,8 @@ conor::Equipment::Equipment(std::string &&stats_path): Item{stats_path}
     type = Type_from_string( stats_file["type"].get<std::string>() );
     boosted_stat = Stats_from_string( stats_file["stat"].get<std::string>() );
     boost_power = stats_file["power"].get<int>();
+
+    spect = Specialisation::equipment;
 }
 
 void conor::Equipment::Use(Player &player)

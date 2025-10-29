@@ -7,7 +7,7 @@ std::string conor::Board_generator::path_to_enemies_stats{};
 Board* conor::Board_generator::Leaf::assigned_map{};
 bool conor::Board_generator::Leaf::is_player{};
 std::vector< std::shared_ptr<Enemy> >* Board_generator::enemies{};
-
+std::vector< std::shared_ptr<Item> >* Board_generator::items{};
 
 conor::Board_generator::Board_generator(int map_heigh_, int map_width_, Board* map_): map_heigh{map_heigh_}, map_width{map_width_}
 {
@@ -258,5 +258,12 @@ std::shared_ptr<Being> conor::Board_generator::Leaf::Add_exit_and_player(std::ve
     assigned_map->entities_map[player_y][player_x] = player;
 
     player->possition = {player_y,player_x};
+
+    std::shared_ptr<Item> start_item = std::make_shared<Equipment>("../../data/equipment/weapons/basic_sword.json");
+    assigned_map->items_map[player_y+2][player_x+1] = start_item;
+    items->push_back(start_item);
+
+    start_item->possition = {player_y,player_x};
+
     return player;
 }

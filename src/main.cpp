@@ -4,17 +4,20 @@
 #include "./system/graphics_manager.hpp"
 #include "./board/path_finder.hpp"
 #include "./enemies/enemies_manager.hpp"
+#include "./items/item_manager.hpp"
 
 int main()
 {
     std::shared_ptr<conor::Player> player;
     conor::Enemies_manager eny_manager{};
+    conor::Item_manager itm_manager{};
 
     conor::Graphics_manager renderer{};
     renderer.Set_path_to_enemies_stats("../../data/beings");
-    renderer.Generate_map(player,eny_manager.Get_enemies_ptr());
+    renderer.Generate_map(player,eny_manager.Get_enemies_ptr(),itm_manager.Get_items_ptr());
     renderer.tile_storage.Set_tiles_tex("../../img/tiles/tiles.png",1,2,{16,16});
     renderer.entieties_storage.Set_tiles_tex("../../img/entieties/entieties.png",4,{16,16});
+    renderer.item_storage.Set_item_tex("../../img/items/items.png",3,{0,2,0});
     renderer.Set_player(player);
 
     conor::Path_finder path_finder{&renderer.map,eny_manager.Get_enemies_ptr()};

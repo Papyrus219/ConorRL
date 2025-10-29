@@ -22,6 +22,7 @@ public:
     std::vector< std::shared_ptr<Enemy>> Generate( std::shared_ptr<Player> &player);
 
     static std::vector< std::shared_ptr<Enemy> > *enemies;
+    static std::vector< std::shared_ptr<Item> > *items;
 
 private:
     const int map_heigh{};

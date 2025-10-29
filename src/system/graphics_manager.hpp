@@ -5,6 +5,7 @@
 #include "../board/board_generator.hpp"
 #include "./tile_graphics_storage.hpp"
 #include "./entieties_graphics_storage.hpp"
+#include "./items_graphics_storage.hpp"
 #include "../tools/observer.hpp"
 
 namespace conor {
@@ -23,13 +24,14 @@ public:
     void Update();
     void Resize();
     void onNotify(Event event, std::shared_ptr<Being> &entity) override;
-    void Generate_map(std::shared_ptr<Player> &player, std::vector< std::shared_ptr<Enemy> > *enemies);
+    void Generate_map(std::shared_ptr<Player> &player, std::vector< std::shared_ptr<Enemy> > *enemies, std::vector< std::shared_ptr<Item> > *items);
     void Set_path_to_enemies_stats(std::string path_to_enemies);
-    void Set_player(std::shared_ptr<Player> &player);
+    void Set_player(std::shared_ptr<Player> &players);
 
     Board map{};
     Tile_storage tile_storage{};
     Entieties_graphics_storage entieties_storage{};
+    Items_graphics_storage item_storage{};
     sf::RenderWindow window{};
 
     ~Graphics_manager() override = default;
