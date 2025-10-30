@@ -137,6 +137,4 @@ void conor::Player_interacter::Dequip_selected_item(std::shared_ptr<Player> play
             player->Dequip(player->Get_const_weapon());
             break;
     }
-
-
 }

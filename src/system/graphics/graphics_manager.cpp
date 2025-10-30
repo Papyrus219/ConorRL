@@ -127,7 +127,7 @@ void conor::Graphics_manager::Render_inventory()
     equipment_tab.setPosition( {size.x * 0.40f, tab_y} );
     stats_tab.setPosition( {size.x * 0.58f, tab_y} );
 
-    sf::Color gray = sf::Color{180,180,180,50};
+    sf::Color gray = sf::Color{180,180,180,130};
     items_tab.setFillColor(gray);
     equipment_tab.setFillColor(gray);
     stats_tab.setFillColor(gray);
@@ -276,7 +276,32 @@ void conor::Graphics_manager::Render_equipment(sf::Vector2u size, sf::Font font)
 
 void conor::Graphics_manager::Render_stats(sf::Vector2u size, sf::Font font)
 {
+    auto stats = assign_player->stats;
 
+    float ITEM_SPACING = 90.f;
+    float LEFT_MARGIN = (size.x*0.2) + 20.f;
+    float TOP_MARGIN = (size.y*0.2) + 80.f;
+
+    float y_offset = TOP_MARGIN;
+
+    sf::Text stats_text{font,"Attack: " + std::to_string(stats.atack),35};
+    stats_text.setPosition( {LEFT_MARGIN + 12.f, y_offset - 2.f} );
+    stats_text.setFillColor(sf::Color::Blue);
+    window.draw(stats_text);
+
+    y_offset += ITEM_SPACING;
+
+    stats_text.setString("Defence: " + std::to_string(stats.defence));
+    stats_text.setPosition( {LEFT_MARGIN + 12.f, y_offset - 2.f} );
+    stats_text.setFillColor(sf::Color::Blue);
+    window.draw(stats_text);
+
+    y_offset += ITEM_SPACING;
+
+    stats_text.setString("Speed: " + std::to_string(stats.speed));
+    stats_text.setPosition( {LEFT_MARGIN + 12.f, y_offset - 2.f} );
+    stats_text.setFillColor(sf::Color::Blue);
+    window.draw(stats_text);
 }
 
 void conor::Graphics_manager::Update()

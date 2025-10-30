@@ -1,8 +1,9 @@
 #include "./being.hpp"
+#include "../tools/subject.hpp"
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <iostream>
-#include "../tools/subject.hpp"
+#include <algorithm>
 
 conor::Being::Being(std::string& stats_path): stats{stats_path}
 {
@@ -38,10 +39,10 @@ void conor::Being::Fight(std::shared_ptr<Being> oponent)
 
     if(slower->speed > faster->speed) std::swap(slower,faster);
 
-    slower->curr_health -= ( (faster->atack*2) - (slower->defence) );
+    slower->curr_health -= std::max( ( (faster->atack*2) - (slower->defence) ), 1 );
     std::cerr << "Slower: " << slower->curr_health << '\n';
 
-    faster->curr_health -= ( (slower->atack*2) - (faster->defence) );
+    faster->curr_health -= std::max( ( (slower->atack*2) - (faster->defence) ), 1 );
     std::cerr << "Faster: " << faster->curr_health << '\n';
 }
 
