@@ -32,6 +32,12 @@ void conor::Player_interacter::Move( std::shared_ptr<Player> player, sf::Vector2
     assign_board->entities_map[new_possition.y][new_possition.x] = player;
     assign_board->entities_map[position.y][position.x].reset();
 
+    if(assign_board->dungeon_map[new_possition.y][new_possition.x] == Tile::exit)
+    {
+        std::cout << "You win!\n";
+        std::exit(0);
+    }
+
     player->possition = new_possition;
     std::shared_ptr<Being> player_being = player;
     subject.Notify(Event::Player_moved,player_being);
@@ -84,6 +90,7 @@ void conor::Player_interacter::Attack_melee(std::shared_ptr<Player> player, sf::
     }
     if(player->stats.curr_health <= 0)
     {
+        std::cout << "You died!\n";
         std::exit(0);
     }
 }

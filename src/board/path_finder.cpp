@@ -92,6 +92,7 @@ void conor::Path_finder::Move_enemies()
 
                     if(player->stats.curr_health <= 0)
                     {
+                        std::cout << "You died!\n";
                         std::exit(0);
                     }
                     if(enemy->stats.curr_health <= 0)
