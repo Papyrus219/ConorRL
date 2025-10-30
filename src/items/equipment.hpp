@@ -3,6 +3,7 @@
 
 
 #include <string>
+#include <memory>
 #include "./item.hpp"
 #include "../being/stats.hpp"
 namespace conor {
@@ -16,7 +17,7 @@ enum class Equip_type
 /**
  * @todo write docs
  */
-class Equipment : public Item
+class Equipment : public Item, public std::enable_shared_from_this<Equipment>
 {
 public:
     Equipment(std::string &stats_path);

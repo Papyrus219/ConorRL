@@ -37,7 +37,7 @@ conor::Equipment::Equipment(std::string &&stats_path): Item{stats_path}
 
 void conor::Equipment::Use(Player &player)
 {
-    player.Equip( std::make_shared<Equipment>(*this) );
+    player.Equip( shared_from_this() );
 }
 
 namespace conor

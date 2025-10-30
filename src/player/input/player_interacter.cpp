@@ -49,7 +49,14 @@ void conor::Player_interacter::Pick_up(std::shared_ptr<Player> player)
 
 void conor::Player_interacter::Put_down(std::shared_ptr<Player> player)
 {
+    sf::Vector2i poss = player->possition;
+    if(!assign_board->items_map[poss.y][poss.x].expired()) return;
+    if(player->inventory->items.size() <= 0) return;
 
+    auto item = ( player->inventory->items[ player->inventory->selected_item_index ] );
+    assign_board->items_map[poss.y][poss.x] = item;
+    item->possition = {poss.y, poss.x};
+    player->inventory->Remove_item(item);
 }
 
 void conor::Player_interacter::Attack_melee(std::shared_ptr<Player> player, sf::Vector2f direction)
@@ -130,4 +137,6 @@ void conor::Player_interacter::Dequip_selected_item(std::shared_ptr<Player> play
             player->Dequip(player->Get_const_weapon());
             break;
     }
+
+
 }

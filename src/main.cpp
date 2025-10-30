@@ -30,6 +30,11 @@ int main()
 
     renderer.Init_window({1000,1000});
 
+    auto items = itm_manager.Get_items_ptr();
+
+    for(auto item : *items)
+        std::cerr << item.use_count() << '\n';
+
     while(renderer.window.isOpen())
     {
         while(const std::optional event = renderer.window.pollEvent() )
@@ -46,6 +51,9 @@ int main()
             {
                 sf::Keyboard::Key key = key_pressed->code;
                 handler.Handle_input(key);
+
+                for(auto item : *items)
+                    std::cerr << item.use_count() << '\n';
             }
         }
 

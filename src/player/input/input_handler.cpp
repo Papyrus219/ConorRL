@@ -92,6 +92,9 @@ void conor::Input_handler::Handle_input_inventory_items(sf::Keyboard::Key& key)
         case Key::Down:
             interacter->Inventory_item_option_down(assigned_player);
             break;
+        case Key::P:
+            interacter->Put_down(assigned_player);
+            break;
         case Key::Enter:
             interacter->Use_item(assigned_player);
             break;
