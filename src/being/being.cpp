@@ -27,11 +27,6 @@ conor::Being::Being(std::string && stats_path): stats{stats_path}
     species = Spececies_from_string( stats_file["species"].get<std::string>() );
 }
 
-/*
- * This function is a lie. It doesnt work, never did, and never will. Change that. This is fucking boolshit! Napraw gameplay! Albo ja naprawię ciebie!
- * -Papyrus219 z lekcji Polskiego.
- */
-
 void conor::Being::Fight(std::shared_ptr<Being> oponent)
 {
     Statistics* faster = &this->stats;
@@ -40,10 +35,10 @@ void conor::Being::Fight(std::shared_ptr<Being> oponent)
     if(slower->speed > faster->speed) std::swap(slower,faster);
 
     slower->curr_health -= std::max( ( (faster->atack*2) - (slower->defence) ), 1 );
-    std::cerr << "Slower: " << slower->curr_health << '\n';
+
+    if(slower->curr_health <= 0) return;
 
     faster->curr_health -= std::max( ( (slower->atack*2) - (faster->defence) ), 1 );
-    std::cerr << "Faster: " << faster->curr_health << '\n';
 }
 
 conor::Being::Species conor::Being::Spececies_from_string(const std::string& s)

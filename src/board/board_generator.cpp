@@ -1,4 +1,5 @@
 #include "board_generator.hpp"
+#include "../items/items_system.hpp"
 
 using namespace conor;
 
@@ -170,13 +171,13 @@ void conor::Board_generator::Leaf::Carve_room(const Room& room, std::mt19937 &rn
             {
                 if(gen(rng) % 2 == 0)
                 {
-                    std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
+                    std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json",*items);
                     assigned_map->entities_map[y][x] = new_enemy;
                     enemies->push_back( new_enemy );
                 }
                 else
                 {
-                    std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/skeleton.json");
+                    std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/skeleton.json",*items);
                     assigned_map->entities_map[y][x] = new_enemy;
                     enemies->push_back( new_enemy );
                 }
@@ -195,7 +196,7 @@ void conor::Board_generator::Leaf::Crave_heigh_tunnel(int x1, int x2, int y, std
         std::uniform_int_distribution<int> gen{0,40};
         if(!gen(rng))
         {
-            std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
+            std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json",*items);
             assigned_map->entities_map[y][x] = new_enemy;
             enemies->push_back( new_enemy );
             assigned_map->entities_map[y][x].lock()->possition = {x,y};
@@ -212,7 +213,7 @@ void conor::Board_generator::Leaf::Crave_width_tunnel(int y1, int y2, int x, std
         std::uniform_int_distribution<int> gen{0,40};
         if(!gen(rng))
         {
-            std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json");
+            std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Board_generator::path_to_enemies_stats + "/goblin.json",*items);
             assigned_map->entities_map[y][x] = new_enemy;
             enemies->push_back( new_enemy );
             assigned_map->entities_map[y][x].lock()->possition = {x,y};
@@ -258,17 +259,6 @@ std::shared_ptr<Being> conor::Board_generator::Leaf::Add_exit_and_player(std::ve
     assigned_map->entities_map[player_y][player_x] = player;
 
     player->possition = {player_y,player_x};
-
-    std::shared_ptr<Item> start_item_1 = std::make_shared<Equipment>("../../data/equipment/weapons/basic_sword.json");
-    assigned_map->items_map[player_y+2][player_x+1] = start_item_1;
-    items->push_back(start_item_1);
-
-    std::shared_ptr<Item> start_item_2 = std::make_shared<Equipment>("../../data/equipment/armor/basic_armor.json");
-    assigned_map->items_map[player_y+1][player_x+1] = start_item_2;
-    items->push_back(start_item_2);
-
-    start_item_1->possition = {player_y+2,player_x+1};
-    start_item_2->possition = {player_y+1,player_x+1};
 
     return player;
 }

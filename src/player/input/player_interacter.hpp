@@ -1,5 +1,5 @@
-#ifndef CONOR_PLAYER_MOVER_HPP
-#define CONOR_PLAYER_MOVER_HPP
+#ifndef CONOR_PLAYER_INTERACTER_HPP
+#define CONOR_PLAYER_INTERACTER_HPP
 
 #include <SFML/System.hpp>
 #include "../../board/board.hpp"
@@ -39,4 +39,4 @@ private:
 
 }
 
-#endif // CONOR_PLAYER_MOVER_H
+#endif // CONOR_PLAYER_INTERACTER_HPP

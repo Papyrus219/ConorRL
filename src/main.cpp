@@ -17,7 +17,7 @@ int main()
     renderer.Generate_map(player,eny_manager.Get_enemies_ptr(),itm_manager.Get_items_ptr());
     renderer.tile_storage.Set_tiles_tex("../../img/tiles/tiles.png",1,2,{16,16});
     renderer.entieties_storage.Set_tiles_tex("../../img/entieties/entieties.png",4,{16,16});
-    renderer.item_storage.Set_item_tex("../../img/items/items.png",3,{1,2,0});
+    renderer.item_storage.Set_item_tex("../../img/items/items.png",3,{1,2,1});
     renderer.Set_player(player);
 
     conor::Path_finder path_finder{&renderer.map,eny_manager.Get_enemies_ptr()};
@@ -31,9 +31,6 @@ int main()
     renderer.Init_window({1000,1000});
 
     auto items = itm_manager.Get_items_ptr();
-
-    for(auto item : *items)
-        std::cerr << item.use_count() << '\n';
 
     while(renderer.window.isOpen())
     {
@@ -51,9 +48,6 @@ int main()
             {
                 sf::Keyboard::Key key = key_pressed->code;
                 handler.Handle_input(key);
-
-                for(auto item : *items)
-                    std::cerr << item.use_count() << '\n';
             }
         }
 

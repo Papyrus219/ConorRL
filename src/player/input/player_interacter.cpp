@@ -71,13 +71,19 @@ void conor::Player_interacter::Attack_melee(std::shared_ptr<Player> player, sf::
 
     if(assign_board->entities_map[atack_possition.y][atack_possition.x].lock()->stats.curr_health <= 0)
     {
-        std::cerr << "Enemy down!\n";
-        auto enemy = assign_board->entities_map[atack_possition.y][atack_possition.x].lock();
-        subject.Notify(Event::Enemy_killed, enemy);
+        auto enemy_being = assign_board->entities_map[atack_possition.y][atack_possition.x].lock();
+        auto enemy = std::dynamic_pointer_cast<Enemy>(enemy_being);
+
+        if(assign_board->items_map[enemy->possition.y][enemy->possition.x].expired() && enemy->Get_drop_item())
+        {
+            enemy->Get_drop_item()->possition = {enemy->possition.y,enemy->possition.x};
+            assign_board->items_map[enemy->possition.y][enemy->possition.x] = enemy->Get_drop_item();
+        }
+
+        subject.Notify(Event::Enemy_killed, enemy_being);
     }
     if(player->stats.curr_health <= 0)
     {
-        std::cerr << "FATALITY!\n";
         std::exit(0);
     }
 }

@@ -44,7 +44,7 @@ void conor::Items_graphics_storage::Set_item_to_sptite(sf::Sprite& sprite, const
             sprite.setTextureRect( items_tex_possition[1][  Get_type_of_equipment(std::dynamic_pointer_cast<Equipment>(item)) ] );
             break;
         case Item::potion:
-            //TO ADD
+            sprite.setTextureRect( items_tex_possition[2][0] );
             break;
         default:
             std::cerr << "Te synek ale zdefinuj ten typ itema!\n";
