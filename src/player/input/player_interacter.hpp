@@ -21,9 +21,16 @@ public:
     void Attack_melee(std::shared_ptr<Player> player,sf::Vector2f direction);
     void Attack_range(std::shared_ptr<Player> player);
 
-    void Inventory_option_up(std::shared_ptr<Player> player);
-    void Inventory_option_down(std::shared_ptr<Player> player);
+    void Inventory_option_left(std::shared_ptr<Player> player);
+    void Inventory_option_right(std::shared_ptr<Player> player);
+
+    void Inventory_item_option_up(std::shared_ptr<Player> player);
+    void Inventory_item_option_down(std::shared_ptr<Player> player);
     void Use_item(std::shared_ptr<Player> player);
+
+    void Inventory_equipment_option_up(std::shared_ptr<Player> player);
+    void Inventory_equipment_option_down(std::shared_ptr<Player> player);
+    void Dequip_selected_item(std::shared_ptr<Player> player);
 
     Subject subject{};
 private:

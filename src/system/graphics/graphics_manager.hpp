@@ -2,11 +2,11 @@
 #define CONOR_GRAPHICS_MANAGER_HPP
 
 #include <SFML/Graphics.hpp>
-#include "../board/board_generator.hpp"
+#include "../../board/board_generator.hpp"
 #include "./tile_graphics_storage.hpp"
 #include "./entieties_graphics_storage.hpp"
 #include "./items_graphics_storage.hpp"
-#include "../tools/observer.hpp"
+#include "../../tools/observer.hpp"
 
 namespace conor {
 
@@ -20,7 +20,6 @@ class Graphics_manager: public Observer
 public:
     void Init_window(sf::Vector2u size);
     void Render();
-    void Render_inventory();
     void Update();
     void Resize();
     void onNotify(Event event, std::shared_ptr<Being> &entity) override;
@@ -37,6 +36,12 @@ public:
     ~Graphics_manager() override = default;
 private:
     void Set_view();
+
+    void Render_inventory();
+    void Render_items(sf::Vector2u size, sf::Font font);
+    void Render_equipment(sf::Vector2u size, sf::Font font);
+    void Render_stats(sf::Vector2u size, sf::Font font);
+
     sf::Vector2i render_area_start{};
     sf::Vector2i render_area_end{};
 

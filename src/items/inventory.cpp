@@ -16,9 +16,11 @@ bool conor::Inventory::Remove_item(std::shared_ptr<Item> item)
 {
     for(auto it = items.begin(); it != items.end(); it++)
     {
-        if(*it == item)
+        if((*it)->Get_id() == item->Get_id())
         {
             items.erase(it);
+            filling -= item->Get_capacity();
+            items_amount--;
             return true;
         }
     }

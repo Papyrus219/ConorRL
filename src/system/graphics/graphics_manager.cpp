@@ -94,8 +94,11 @@ void conor::Graphics_manager::Render()
 
 void conor::Graphics_manager::Render_inventory()
 {
-    window.setView( window.getDefaultView() );
+    if(!assign_player) return;
+    auto inventory = assign_player->Get_const_inventory();
+
     sf::Vector2u size = window.getSize();
+    window.setView( window.getDefaultView() );
 
     float ITEM_SPACING = 60.f;
     float LEFT_MARGIN = (size.x*0.2) + 20.f;
@@ -110,23 +113,69 @@ void conor::Graphics_manager::Render_inventory()
     window.draw(background);
 
     sf::Font font;
-    if(font.openFromFile("../../data/fonts/font1.ttf"))
-    {
-        sf::Text title{font,"Inventory",35};
-        title.setFillColor(sf::Color::White);
-        title.setPosition( {size.x*0.22f, size.y * 0.22f} );
-        window.draw(title);
-    }
-    else
+    if(!font.openFromFile("../../data/fonts/font1.ttf"))
     {
         std::cerr << "Jesteś na steam decku!\n";
     }
 
-    if(!assign_player) return;
+    sf::Text items_tab{font, "[1] Items",22};
+    sf::Text equipment_tab{font,"[2] Equipment",22};
+    sf::Text stats_tab{font,"[3] Stats",22};
+
+    float tab_y = size.y * 0.22f;
+    items_tab.setPosition( {size.x * 0.25f, tab_y} );
+    equipment_tab.setPosition( {size.x * 0.40f, tab_y} );
+    stats_tab.setPosition( {size.x * 0.58f, tab_y} );
+
+    sf::Color gray = sf::Color{180,180,180,50};
+    items_tab.setFillColor(gray);
+    equipment_tab.setFillColor(gray);
+    stats_tab.setFillColor(gray);
+
+    switch(inventory->Get_current_tab())
+    {
+        case InventoryTab::items:
+            items_tab.setFillColor(sf::Color::White);
+            break;
+        case InventoryTab::equipment:
+            equipment_tab.setFillColor(sf::Color::White);
+            break;
+
+        case InventoryTab::stats:
+            stats_tab.setFillColor(sf::Color::White);
+            break;
+    }
+
+    window.draw(items_tab);
+    window.draw(equipment_tab);
+    window.draw(stats_tab);
+
+    switch(inventory->Get_current_tab())
+    {
+        case InventoryTab::items:
+            Render_items(size,font);
+            break;
+        case InventoryTab::equipment:
+            Render_equipment(size,font);
+            break;
+        case InventoryTab::stats:
+            Render_stats(size,font);
+            break;
+    }
+
+    Set_view();
+}
+
+void conor::Graphics_manager::Render_items(sf::Vector2u size, sf::Font font)
+{
+    auto inventory = assign_player->Get_const_inventory();
+    auto items = inventory->Get_items();
+
+    float ITEM_SPACING = 60.f;
+    float LEFT_MARGIN = (size.x*0.2) + 20.f;
+    float TOP_MARGIN = (size.y*0.2) + 100.f;
 
     sf::Texture tmp{};
-    auto items = assign_player->Get_inventory();
-
     float y_offset = TOP_MARGIN;
     for(int i=0; i< items.size(); i++)
     {
@@ -141,7 +190,7 @@ void conor::Graphics_manager::Render_inventory()
 
         sf::Text item_name{font,item->Get_name(),20};
 
-        if(i == assign_player->Get_selected_inventory_index())
+        if(i == inventory->Get_selected_item_index())
         {
             item_name.setStyle(sf::Text::Bold);
             item_name.setFillColor(sf::Color(255, 255, 150));
@@ -161,8 +210,73 @@ void conor::Graphics_manager::Render_inventory()
 
         y_offset += ITEM_SPACING;
     }
+}
 
-    Set_view();
+void conor::Graphics_manager::Render_equipment(sf::Vector2u size, sf::Font font)
+{
+    auto armor = assign_player->Get_const_armor();
+    auto weapon = assign_player->Get_const_weapon();
+
+    float ITEM_SPACING = 100.f;
+    float LEFT_MARGIN = (size.x*0.2) + 20.f;
+    float TOP_MARGIN = (size.y*0.2) + 80.f;
+
+    sf::Texture tmp{};
+    sf::Sprite icon{tmp};
+    icon.setScale( {4.0,4.0} );
+    float y_offset = TOP_MARGIN;
+
+    sf::Text armor_info{font,"Armor: ",40};
+    armor_info.setPosition( {LEFT_MARGIN + 12.f, y_offset - 2.f} );
+
+    sf::Text armor_name{font,"None",40};
+    armor_name.setPosition( {LEFT_MARGIN + 150.f +  4*16.f, y_offset - 2.f} );
+    armor_name.setFillColor(sf::Color{40,40,40});
+    if(armor)
+    {
+        armor_name.setString( armor->Get_name() );
+        item_storage.Set_item_to_sptite(icon, armor);
+        icon.setPosition( {LEFT_MARGIN + 150.f, y_offset - 6.f} );
+        window.draw(icon);
+    }
+    window.draw(armor_name);
+
+    y_offset += ITEM_SPACING;
+    sf::Text weapon_info{font,"Weapon:",40};
+    weapon_info.setPosition( {LEFT_MARGIN + 12.f, y_offset - 2.f} );
+
+    sf::Text weapon_name{font,"None",40};
+    weapon_name.setPosition( {LEFT_MARGIN + 170.f +  4*16.f, y_offset - 2.f} );
+    weapon_name.setFillColor(sf::Color{40,40,40});
+    if(weapon)
+    {
+        weapon_name.setString( weapon->Get_name() );
+        item_storage.Set_item_to_sptite(icon, weapon);
+        icon.setPosition( {LEFT_MARGIN + 150.f, y_offset - 6.f} );
+        window.draw(icon);
+    }
+    window.draw(weapon_name);
+
+    auto inventory = assign_player->Get_const_inventory();
+    switch(inventory->Get_selected_equipment_index())
+    {
+        case 0:
+            armor_info.setStyle(sf::Text::Bold);
+            armor_info.setFillColor(sf::Color(255, 255, 150));
+            break;
+        case 1:
+            weapon_info.setStyle(sf::Text::Bold);
+            weapon_info.setFillColor(sf::Color(255, 255, 150));
+            break;
+    }
+
+    window.draw(armor_info);
+    window.draw(weapon_info);
+}
+
+void conor::Graphics_manager::Render_stats(sf::Vector2u size, sf::Font font)
+{
+
 }
 
 void conor::Graphics_manager::Update()

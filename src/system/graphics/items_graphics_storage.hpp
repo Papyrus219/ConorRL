@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include "../items/items_system.hpp"
+#include "../../items/items_system.hpp"
 
 namespace conor {
 

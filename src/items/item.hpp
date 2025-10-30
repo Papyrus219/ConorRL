@@ -18,14 +18,15 @@ public:
     Item(std::string &stats_path);
     Item(std::string &&stats_path);
     Item(int capacity_);
-    Item(const Item &other) = default;
-    Item(Item &&other) = default;
+    Item(const Item &other);
+    Item(Item &&other);
 
     std::string Get_name() {return name;};
     std::string Get_discription() {return discription;};
     int Get_capacity() {return capacity;};
     int Get_id() {return id;};
 
+    Item& operator=(const Item& other);
     bool operator==(const Item& other) const;
 
     virtual void Use(Player &user) = 0;
@@ -47,9 +48,10 @@ protected:
     std::string name{};
     std::string discription{};
     int capacity{};
-    int id{};
+    unsigned int id{};
+    bool coutable{};
 
-    static int items_amount;
+    static unsigned int items_amount;
 };
 
 }

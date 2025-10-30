@@ -1,7 +1,7 @@
 #include "input_handler.hpp"
 #include <iostream>
 
-void conor::Input_handler::Handle_input_broad(sf::Keyboard::Key &key)
+void conor::Input_handler::Handle_input(sf::Keyboard::Key &key)
 {
     if(assigned_player->in_inventory)
     {
@@ -39,7 +39,6 @@ void conor::Input_handler::Handle_input_board(sf::Keyboard::Key& key)
             interacter->Move(assigned_player,{0,0});
             break;
         case Key::I:
-            std::cerr << "Open inventory!\n";
             assigned_player->in_inventory = true;
             break;
         case Key::P:
@@ -55,18 +54,78 @@ void conor::Input_handler::Handle_input_inventory(sf::Keyboard::Key& key)
 
     switch(key)
     {
-        case Key::Up:
-            interacter->Inventory_option_up(assigned_player);
+        case Key::Left:
+            interacter->Inventory_option_left(assigned_player);
             break;
-        case Key::Down:
-            interacter->Inventory_option_down(assigned_player);
-            break;
-        case Key::Enter:
-            interacter->Use_item(assigned_player);
+        case Key::Right:
+            interacter->Inventory_option_right(assigned_player);
             break;
         case Key::I:
             assigned_player->in_inventory = false;
             break;
+        default:
+            switch(assigned_player->inventory->Get_current_tab())
+            {
+                case InventoryTab::items:
+                    Handle_input_inventory_items(key);
+                    break;
+                case InventoryTab::equipment:
+                    Handle_input_inventory_equipment(key);
+                    break;
+                case InventoryTab::stats:
+                    Handle_input_inventory_stats(key);
+                    break;
+            }
+            break;
+    }
+}
+
+void conor::Input_handler::Handle_input_inventory_items(sf::Keyboard::Key& key)
+{
+    using sf::Keyboard::Key;
+
+    switch(key)
+    {
+        case Key::Up:
+            interacter->Inventory_item_option_up(assigned_player);
+            break;
+        case Key::Down:
+            interacter->Inventory_item_option_down(assigned_player);
+            break;
+        case Key::Enter:
+            interacter->Use_item(assigned_player);
+            break;
+        default:
+            break;
+    }
+}
+
+void conor::Input_handler::Handle_input_inventory_equipment(sf::Keyboard::Key& key)
+{
+    using sf::Keyboard::Key;
+
+    switch(key)
+    {
+        case Key::Up:
+            interacter->Inventory_equipment_option_up(assigned_player);
+            break;
+        case Key::Down:
+            interacter->Inventory_equipment_option_down(assigned_player);
+            break;
+        case Key::Enter:
+            interacter->Dequip_selected_item(assigned_player);
+            break;
+        default:
+            break;
+    }
+}
+
+void conor::Input_handler::Handle_input_inventory_stats(sf::Keyboard::Key& key)
+{
+    using sf::Keyboard::Key;
+
+    switch(key)
+    {
         default:
             break;
     }

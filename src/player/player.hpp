@@ -28,10 +28,12 @@ public:;
     void Dequip(std::shared_ptr<Equipment> item);
 
     bool Get_if_in_inventory() {return in_inventory;};
-    std::vector< std::weak_ptr<Item> > Get_inventory() {return inventory.Get_items();};
-    int Get_selected_inventory_index() {return inventory.Get_selected_index();};
+    const std::shared_ptr<Inventory> Get_const_inventory() const {return inventory;};
+    const std::shared_ptr<Equipment> Get_const_weapon() const {return equiped_weapon;};
+    const std::shared_ptr<Equipment> Get_const_armor() const {return equiped_armor;};
+
 private:
-    Inventory inventory{20};
+    std::shared_ptr<Inventory> inventory{ std::make_shared<Inventory>(20) };
     std::shared_ptr<Equipment> equiped_armor{};
     std::shared_ptr<Equipment> equiped_weapon{};
     bool in_inventory{};

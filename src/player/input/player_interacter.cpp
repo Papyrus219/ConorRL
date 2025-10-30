@@ -43,8 +43,13 @@ void conor::Player_interacter::Pick_up(std::shared_ptr<Player> player)
     if(assign_board->items_map[poss.y][poss.x].expired()) return;
 
     auto item = assign_board->items_map[poss.y][poss.x].lock();
-    player->inventory.Add_item(item);
+    player->inventory->Add_item(item);
     assign_board->items_map[poss.y][poss.x].reset();
+}
+
+void conor::Player_interacter::Put_down(std::shared_ptr<Player> player)
+{
+
 }
 
 void conor::Player_interacter::Attack_melee(std::shared_ptr<Player> player, sf::Vector2f direction)
@@ -68,8 +73,6 @@ void conor::Player_interacter::Attack_melee(std::shared_ptr<Player> player, sf::
         std::cerr << "FATALITY!\n";
         std::exit(0);
     }
-
-
 }
 
 void conor::Player_interacter::Attack_range(std::shared_ptr<Player> player)
@@ -77,19 +80,54 @@ void conor::Player_interacter::Attack_range(std::shared_ptr<Player> player)
 
 }
 
-void conor::Player_interacter::Inventory_option_up(std::shared_ptr<Player> player)
+void conor::Player_interacter::Inventory_option_right(std::shared_ptr<Player> player)
 {
-    player->inventory.selected_index--;
-    if(player->inventory.selected_index < 0) player->inventory.selected_index = player->inventory.Get_items_amount()-1;
+    if(player->inventory->current_tab != InventoryTab::stats)
+        player->inventory->current_tab = static_cast<InventoryTab>( static_cast<int>(player->inventory->current_tab) + 1 );
 }
 
-void conor::Player_interacter::Inventory_option_down(std::shared_ptr<Player> player)
+void conor::Player_interacter::Inventory_option_left(std::shared_ptr<Player> player)
 {
-    player->inventory.selected_index++;
-    if(player->inventory.selected_index >= player->inventory.Get_items_amount()) player->inventory.selected_index = 0;
+    if(player->inventory->current_tab != InventoryTab::items)
+        player->inventory->current_tab = static_cast<InventoryTab>( static_cast<int>(player->inventory->current_tab) - 1 );
+}
+
+void conor::Player_interacter::Inventory_item_option_up(std::shared_ptr<Player> player)
+{
+    player->inventory->selected_item_index--;
+    if(player->inventory->selected_item_index < 0) player->inventory->selected_item_index = player->inventory->Get_items_amount()-1;
+}
+
+void conor::Player_interacter::Inventory_item_option_down(std::shared_ptr<Player> player)
+{
+    player->inventory->selected_item_index++;
+    if(player->inventory->selected_item_index >= player->inventory->Get_items_amount()) player->inventory->selected_item_index = 0;
 }
 
 void conor::Player_interacter::Use_item(std::shared_ptr<Player> player)
 {
-    player->inventory.items[player->inventory.selected_index]->Use(*player);
+    if(player->inventory->items.size() > 0) player->inventory->items[player->inventory->selected_item_index]->Use(*player);
+}
+
+void conor::Player_interacter::Inventory_equipment_option_up(std::shared_ptr<Player> player)
+{
+    if(player->inventory->selected_equipment_index > 0) player->inventory->selected_equipment_index--;
+}
+
+void conor::Player_interacter::Inventory_equipment_option_down(std::shared_ptr<Player> player)
+{
+    if(player->inventory->selected_equipment_index < 1) player->inventory->selected_equipment_index++;
+}
+
+void conor::Player_interacter::Dequip_selected_item(std::shared_ptr<Player> player)
+{
+    switch(player->inventory->selected_equipment_index)
+    {
+        case 0:
+            player->Dequip(player->Get_const_armor());
+            break;
+        case 1:
+            player->Dequip(player->Get_const_weapon());
+            break;
+    }
 }

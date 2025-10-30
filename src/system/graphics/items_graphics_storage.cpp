@@ -28,6 +28,11 @@ void conor::Items_graphics_storage::Set_item_tex(std::string items_tex_path, int
 
 void conor::Items_graphics_storage::Set_item_to_sptite(sf::Sprite& sprite, const std::shared_ptr<Item> item )
 {
+    if (!item) {
+        std::cerr << "Null item passed to Set_item_to_sprite!\n";
+        return;
+    }
+
     sprite.setTexture(items_tex);
 
     switch(item->spect)
@@ -45,8 +50,6 @@ void conor::Items_graphics_storage::Set_item_to_sptite(sf::Sprite& sprite, const
             std::cerr << "Te synek ale zdefinuj ten typ itema!\n";
             break;
     }
-
-
 }
 
 int conor::Items_graphics_storage::Get_type_of_equipment(const std::shared_ptr<Equipment> equip)

@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "../board/tile.hpp"
+#include "../../board/tile.hpp"
 
 namespace conor
 {
