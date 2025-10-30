@@ -1,0 +1,8 @@
+{
+    "name": "Holly armor",
+    "discription": "Poswiecony przez samego papierza.",
+    "type": "armor",
+    "stat": "defence",
+    "power": 5,
+    "capacity": 3
+}

@@ -23,11 +23,10 @@ int main()
     conor::Path_finder path_finder{&renderer.map,eny_manager.Get_enemies_ptr()};
 
     conor::Input_handler handler{player};
-    handler.attacker.emplace(&renderer.map);
-    handler.mover.emplace(&renderer.map, &*handler.attacker);
-    handler.mover->subject.Add_observer( &renderer );
-    handler.mover->subject.Add_observer( &path_finder );
-    handler.attacker->subject.Add_observer( &eny_manager );
+    handler.interacter.emplace(&renderer.map);
+    handler.interacter->subject.Add_observer( &renderer );
+    handler.interacter->subject.Add_observer( &path_finder );
+    handler.interacter->subject.Add_observer( &eny_manager );
 
     renderer.Init_window({1000,1000});
 

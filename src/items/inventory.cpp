@@ -25,3 +25,12 @@ bool conor::Inventory::Remove_item(std::shared_ptr<Item> item)
 
     return false;
 }
+
+std::vector<std::weak_ptr<Item>> conor::Inventory::Get_items()
+{
+    std::vector< std::weak_ptr<Item> > converted;
+    for(auto &item : items)
+        converted.push_back( item );
+
+    return converted;
+}

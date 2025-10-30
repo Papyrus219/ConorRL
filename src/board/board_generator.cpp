@@ -259,11 +259,16 @@ std::shared_ptr<Being> conor::Board_generator::Leaf::Add_exit_and_player(std::ve
 
     player->possition = {player_y,player_x};
 
-    std::shared_ptr<Item> start_item = std::make_shared<Equipment>("../../data/equipment/weapons/basic_sword.json");
-    assigned_map->items_map[player_y+2][player_x+1] = start_item;
-    items->push_back(start_item);
+    std::shared_ptr<Item> start_item_1 = std::make_shared<Equipment>("../../data/equipment/weapons/basic_sword.json");
+    assigned_map->items_map[player_y+2][player_x+1] = start_item_1;
+    items->push_back(start_item_1);
 
-    start_item->possition = {player_y,player_x};
+    std::shared_ptr<Item> start_item_2 = std::make_shared<Equipment>("../../data/equipment/armor/basic_armor.json");
+    assigned_map->items_map[player_y+1][player_x+1] = start_item_2;
+    items->push_back(start_item_2);
+
+    start_item_1->possition = {player_y+2,player_x+1};
+    start_item_2->possition = {player_y+1,player_x+1};
 
     return player;
 }

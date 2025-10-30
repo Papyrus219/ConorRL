@@ -3,7 +3,6 @@
 
 #include <SFML/System.hpp>
 #include "../../board/board.hpp"
-#include "./player_attacker.hpp"
 #include "../../tools/subject.hpp"
 
 namespace conor {
@@ -11,15 +10,20 @@ namespace conor {
 /**
  * @todo write docs
  */
-class Player_mover
+class Player_interacter
 {
 public:
-    Player_mover(Board* board, Player_attacker* attack): assign_board{board}, assign_attack{attack} {};
+    Player_interacter(Board* board): assign_board{board} {};
     void Move(std::shared_ptr<Player> player, sf::Vector2f direction);
+    void Pick_up(std::shared_ptr<Player> player);
+    void Put_down(std::shared_ptr<Player> player);
+
+    void Attack_melee(std::shared_ptr<Player> player,sf::Vector2f direction);
+    void Attack_range();
+
     Subject subject{};
 private:
     Board* assign_board{};
-    Player_attacker* assign_attack{};
 };
 
 }

@@ -4,8 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <optional>
 #include "../player.hpp"
-#include "./player_mover.hpp"
-#include "./player_attacker.hpp"
+#include "./player_interacter.hpp"
 
 namespace conor
 {
@@ -22,8 +21,7 @@ public:
     void Handle_input_inventory(sf::Keyboard::Key &key);
     void Handle_input_board(sf::Keyboard::Key &key);
 
-    std::optional<Player_mover> mover;
-    std::optional<Player_attacker> attacker;
+    std::optional<Player_interacter> interacter;
 private:
     const std::shared_ptr<Player> assigned_player{};
 };

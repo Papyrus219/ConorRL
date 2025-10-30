@@ -11,7 +11,7 @@ namespace conor
 {
 
 class Input_handler;
-class Player_mover;
+class Player_interacter;
 
 /**
 * @todo write docs
@@ -24,19 +24,20 @@ public:;
     Player(std::string &&stats_path): Being{stats_path} {};
 
     void Move(sf::Vector2i direction);
-    void Equip(Equipment item);
-    void Dequip(Equipment item);
+    void Equip(std::shared_ptr<Equipment> item);
+    void Dequip(std::shared_ptr<Equipment> item);
 
     bool Get_if_in_inventory() {return in_inventory;};
-    const std::vector< std::shared_ptr<Item> > Get_inventory_const_ptr() const {return inventory.Get_items_ptr_const(); };
+    std::vector< std::weak_ptr<Item> > Get_inventory() {return inventory.Get_items();};
+    int Get_selected_inventory_index() {return inventory.Get_selected_index();};
 private:
     Inventory inventory{20};
-    Equipment *equiped_armor{};
-    Equipment *equiped_weapon{};
+    std::shared_ptr<Equipment> equiped_armor{};
+    std::shared_ptr<Equipment> equiped_weapon{};
     bool in_inventory{};
 
     friend Input_handler;
-    friend Player_mover;
+    friend Player_interacter;
 };
 
 }

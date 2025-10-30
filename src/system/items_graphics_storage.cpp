@@ -16,7 +16,7 @@ void conor::Items_graphics_storage::Set_item_tex(std::string items_tex_path, int
             items_tex_possition.push_back( std::vector<sf::IntRect>{} );
             for(int j=0;j<items_in_category_amount[i];j++)
             {
-                items_tex_possition[i].push_back( {{item_size.x*j,item_size.y*j },{item_size.x,item_size.y}});
+                items_tex_possition[i].push_back( {{item_size.x*j,item_size.y*i },{item_size.x,item_size.y}});
             }
         }
     }

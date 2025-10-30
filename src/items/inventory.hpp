@@ -19,12 +19,14 @@ public:
 
     int Get_filling() {return filling;};
     int Get_items_amount() {return items_amount;};
-    const std::vector< std::shared_ptr<Item> > Get_items_ptr_const() const {return items;};
+    int Get_selected_index() {return selected_index;};
+    std::vector< std::weak_ptr<Item> > Get_items();
 
     const int capacity{};
 private:
     int filling{};
     int items_amount{};
+    int selected_index{};
     std::vector< std::shared_ptr<Item> > items{};
 };
 

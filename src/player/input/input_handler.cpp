@@ -21,27 +21,29 @@ void conor::Input_handler::Handle_input_board(sf::Keyboard::Key& key)
     {
         case Key::Right:
             assigned_player->direction = Being::right;
-            mover->Move(assigned_player,{1,0});
+            interacter->Move(assigned_player,{1,0});
             break;
         case Key::Left:
             assigned_player->direction = Being::left;
-            mover->Move(assigned_player,{-1,0});
+            interacter->Move(assigned_player,{-1,0});
             break;
         case Key::Up:
             assigned_player->direction = Being::up;
-            mover->Move(assigned_player,{0,-1});
+            interacter->Move(assigned_player,{0,-1});
             break;
         case Key::Down:
             assigned_player->direction = Being::down;
-            mover->Move(assigned_player,{0,1});
+            interacter->Move(assigned_player,{0,1});
             break;
         case Key::Space:
-            mover->Move(assigned_player,{0,0});
+            interacter->Move(assigned_player,{0,0});
             break;
         case Key::I:
             std::cerr << "Open inventory!\n";
             assigned_player->in_inventory = true;
             break;
+        case Key::P:
+            interacter->Pick_up(assigned_player);
         default:
             break;
     }
@@ -53,6 +55,8 @@ void conor::Input_handler::Handle_input_inventory(sf::Keyboard::Key& key)
 
     switch(key)
     {
+        case Key::Up:
+
         case Key::I:
             assigned_player->in_inventory = false;
             break;

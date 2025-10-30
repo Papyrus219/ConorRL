@@ -74,7 +74,6 @@ void conor::Graphics_manager::Render()
             if(!map.items_map[y][x].expired())
             {
                 auto to_set{map.items_map[y][x].lock()};
-                std::cout << "Halo: " << y << " " << x << "\n";
                 item_storage.Set_item_to_sptite(drawer,to_set);
                 window.draw(drawer);
             }
@@ -98,7 +97,11 @@ void conor::Graphics_manager::Render_inventory()
     window.setView( window.getDefaultView() );
     sf::Vector2u size = window.getSize();
 
-    sf::RectangleShape background({size.x*0.6f, size.y*0.6f});
+    float ITEM_SPACING = 60.f;
+    float LEFT_MARGIN = (size.x*0.2) + 20.f;
+    float TOP_MARGIN = (size.y*0.2) + 100.f;
+
+    sf::RectangleShape background({size.x*0.7f, size.y*0.7f});
     background.setFillColor(sf::Color{128,10,10,150});
     background.setOutlineColor(sf::Color::Black);
     background.setOutlineThickness(4.f);
@@ -117,6 +120,46 @@ void conor::Graphics_manager::Render_inventory()
     else
     {
         std::cerr << "Jesteś na steam decku!\n";
+    }
+
+    if(!assign_player) return;
+
+    sf::Texture tmp{};
+    auto items = assign_player->Get_inventory();
+
+    float y_offset = TOP_MARGIN;
+    for(int i=0; i< items.size(); i++)
+    {
+        auto item = items[i].lock();
+        if(!item) continue;
+
+        sf::Sprite icon{tmp};
+        item_storage.Set_item_to_sptite(icon,item);
+        icon.setPosition( {LEFT_MARGIN,y_offset} );
+        icon.setScale( {4.0f,4.0f} );
+        window.draw(icon);
+
+        sf::Text item_name{font,item->Get_name(),20};
+
+        if(i == assign_player->Get_selected_inventory_index())
+        {
+            item_name.setStyle(sf::Text::Bold);
+            item_name.setFillColor(sf::Color(255, 255, 150));
+        }
+        else
+        {
+            item_name.setFillColor(sf::Color::White);
+        }
+
+        item_name.setPosition( {LEFT_MARGIN + 16*4 + 12.f, y_offset - 2.f} );
+        window.draw(item_name);
+
+        sf::Text item_discription{font,item->Get_discription(),14};
+        item_discription.setFillColor(sf::Color{200,200,200});
+        item_discription.setPosition( {LEFT_MARGIN + 16*4 + 12.f, y_offset + 18.f} );
+        window.draw(item_discription);
+
+        y_offset += ITEM_SPACING;
     }
 
     Set_view();
