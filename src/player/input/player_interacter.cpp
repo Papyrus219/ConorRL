@@ -72,8 +72,24 @@ void conor::Player_interacter::Attack_melee(std::shared_ptr<Player> player, sf::
 
 }
 
-void conor::Player_interacter::Attack_range()
+void conor::Player_interacter::Attack_range(std::shared_ptr<Player> player)
 {
 
 }
 
+void conor::Player_interacter::Inventory_option_up(std::shared_ptr<Player> player)
+{
+    player->inventory.selected_index--;
+    if(player->inventory.selected_index < 0) player->inventory.selected_index = player->inventory.Get_items_amount()-1;
+}
+
+void conor::Player_interacter::Inventory_option_down(std::shared_ptr<Player> player)
+{
+    player->inventory.selected_index++;
+    if(player->inventory.selected_index >= player->inventory.Get_items_amount()) player->inventory.selected_index = 0;
+}
+
+void conor::Player_interacter::Use_item(std::shared_ptr<Player> player)
+{
+    player->inventory.items[player->inventory.selected_index]->Use(*player);
+}

@@ -19,7 +19,11 @@ public:
     void Put_down(std::shared_ptr<Player> player);
 
     void Attack_melee(std::shared_ptr<Player> player,sf::Vector2f direction);
-    void Attack_range();
+    void Attack_range(std::shared_ptr<Player> player);
+
+    void Inventory_option_up(std::shared_ptr<Player> player);
+    void Inventory_option_down(std::shared_ptr<Player> player);
+    void Use_item(std::shared_ptr<Player> player);
 
     Subject subject{};
 private:

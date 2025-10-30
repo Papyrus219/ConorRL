@@ -56,7 +56,14 @@ void conor::Input_handler::Handle_input_inventory(sf::Keyboard::Key& key)
     switch(key)
     {
         case Key::Up:
-
+            interacter->Inventory_option_up(assigned_player);
+            break;
+        case Key::Down:
+            interacter->Inventory_option_down(assigned_player);
+            break;
+        case Key::Enter:
+            interacter->Use_item(assigned_player);
+            break;
         case Key::I:
             assigned_player->in_inventory = false;
             break;

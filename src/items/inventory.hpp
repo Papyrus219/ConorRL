@@ -7,6 +7,8 @@
 
 namespace conor {
 
+class Player_interacter;
+
 /**
  * @todo write docs
  */
@@ -28,6 +30,8 @@ private:
     int items_amount{};
     int selected_index{};
     std::vector< std::shared_ptr<Item> > items{};
+
+    friend Player_interacter;
 };
 
 }

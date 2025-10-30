@@ -15,6 +15,7 @@ void conor::Player::Equip(std::shared_ptr<Equipment> item)
         case Equip_type::armor:
             if(equiped_armor)
             {
+                if(item == equiped_armor) return;
                 Dequip(equiped_armor);
             }
 
@@ -24,6 +25,7 @@ void conor::Player::Equip(std::shared_ptr<Equipment> item)
         case Equip_type::weapon:
             if(equiped_weapon)
             {
+                if(item == equiped_weapon) return;
                 Dequip(equiped_weapon);
             }
             equiped_weapon = item;
