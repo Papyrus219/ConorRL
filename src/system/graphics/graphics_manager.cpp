@@ -88,6 +88,7 @@ void conor::Graphics_manager::Render()
     }
 
     if(assign_player->Get_if_in_inventory()) Render_inventory();
+    Render_ui();
 
     window.display();
 }
@@ -302,6 +303,28 @@ void conor::Graphics_manager::Render_stats(sf::Vector2u size, sf::Font font)
     stats_text.setPosition( {LEFT_MARGIN + 12.f, y_offset - 2.f} );
     stats_text.setFillColor(sf::Color::Blue);
     window.draw(stats_text);
+}
+
+void conor::Graphics_manager::Render_ui()
+{
+    window.setView( window.getDefaultView() );
+
+    auto stats = assign_player->stats;
+    sf::Vector2u size = window.getSize();
+
+    sf::Font font;
+    if(!font.openFromFile("../../data/fonts/font1.ttf"))
+    {
+        std::cerr << "Jesteś na steam decku!\n";
+    }
+
+    sf::Text hp_text{font, (std::to_string(stats.curr_health) + " / " + std::to_string(stats.max_health)) , 40};
+    hp_text.setFillColor(sf::Color{121,19,19});
+    hp_text.setPosition( {size.x*0.85f, size.y*0.95f} );
+
+    window.draw(hp_text);
+
+    Set_view();
 }
 
 void conor::Graphics_manager::Update()

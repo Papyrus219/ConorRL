@@ -41,6 +41,7 @@ private:
     void Render_items(sf::Vector2u size, sf::Font font);
     void Render_equipment(sf::Vector2u size, sf::Font font);
     void Render_stats(sf::Vector2u size, sf::Font font);
+    void Render_ui();
 
     sf::Vector2i render_area_start{};
     sf::Vector2i render_area_end{};
