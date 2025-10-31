@@ -1,6 +1,6 @@
 {
-    "name": "Berserker",
-    "discription": "Bije mocno w huj!",
+    "name": "Siekiera",
+    "discription": "Dziwne, przeciez to nie tartak...",
     "type": "weapon",
     "stat": "atack",
     "power": 5,

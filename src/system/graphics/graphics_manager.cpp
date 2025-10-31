@@ -319,7 +319,7 @@ void conor::Graphics_manager::Render_ui()
     }
 
     sf::Text hp_text{font, (std::to_string(stats.curr_health) + " / " + std::to_string(stats.max_health)) , 40};
-    hp_text.setFillColor(sf::Color{121,19,19});
+    hp_text.setFillColor(sf::Color::Green);
     hp_text.setPosition( {size.x*0.85f, size.y*0.95f} );
 
     window.draw(hp_text);

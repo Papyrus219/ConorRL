@@ -14,13 +14,14 @@ bool conor::Inventory::Add_item(std::shared_ptr<Item> item)
 
 bool conor::Inventory::Remove_item(std::shared_ptr<Item> item)
 {
-    for(auto it = items.begin(); it != items.end(); it++)
+    for(int i=0; i <= items.size(); i++)
     {
-        if((*it)->Get_id() == item->Get_id())
+        if(items[i]->Get_id() == item->Get_id())
         {
-            items.erase(it);
+            items.erase(items.begin() + i);
             filling -= item->Get_capacity();
             items_amount--;
+            if(selected_item_index == i && selected_item_index != 0) selected_item_index--;
             return true;
         }
     }

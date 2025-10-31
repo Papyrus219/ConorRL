@@ -2,7 +2,7 @@
     "species": "player",
     "discription": "Gupi.",
     "health": 30,
-    "atack": 10,
+    "atack": 5,
     "defence": 4,
     "speed": 2
 }

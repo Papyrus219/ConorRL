@@ -27,7 +27,7 @@ int main()
     handler.interacter->subject.Add_observer( &renderer );
     handler.interacter->subject.Add_observer( &path_finder );
     handler.interacter->subject.Add_observer( &eny_manager );
-
+//tedi tutaj byL
     renderer.Init_window({1000,1000});
 
     auto items = itm_manager.Get_items_ptr();
