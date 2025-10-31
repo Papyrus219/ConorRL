@@ -1,9 +1,10 @@
 #include "path_finder.hpp"
+#include "../../tools/subject.hpp"
+#include "../../player/player.hpp"
+#include "../../enemies/enemy.hpp"
 #include <iostream>
 #include <queue>
 #include <algorithm>
-#include <unordered_set>
-#include "../tools/subject.hpp"
 
 using namespace conor;
 

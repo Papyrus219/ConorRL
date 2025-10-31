@@ -1,14 +1,14 @@
 #ifndef CONOR_PATH_FINDER_HPP
 #define CONOR_PATH_FINDER_HPP
 
-#include "./board.hpp"
-#include "../player/player.hpp"
-#include "../enemies/enemy.hpp"
-#include "../tools/observer.hpp"
-#include "../tools/subject.hpp"
+#include "../../board/board.hpp"
+#include "../../tools/observer.hpp"
+#include "../../tools/subject.hpp"
 
 namespace conor {
 
+class Player;
+class Enemy;
 class Subject;
 
 /**

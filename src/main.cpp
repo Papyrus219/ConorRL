@@ -8,10 +8,6 @@
 
 int main()
 {
-    std::shared_ptr<conor::Player> player;
-    conor::Enemies_manager eny_manager{};
-    conor::Item_manager itm_manager{};
-
     conor::Graphics_manager renderer{};
     renderer.Set_path_to_enemies_stats("../../data/beings");
     renderer.Generate_map(player,eny_manager.Get_enemies_ptr(),itm_manager.Get_items_ptr());
@@ -29,8 +25,6 @@ int main()
     handler.interacter->subject.Add_observer( &eny_manager );
 //tedi tutaj byL
     renderer.Init_window({1000,1000});
-
-    auto items = itm_manager.Get_items_ptr();
 
     while(renderer.window.isOpen())
     {
