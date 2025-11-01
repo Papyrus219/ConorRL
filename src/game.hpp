@@ -1,9 +1,10 @@
 #ifndef CONOR_GAME_HPP
 #define CONOR_GAME_HPP
 
+#include <memory>
 #include "./system/graphics/graphics_manager.hpp"
-#include "./system/resorces_manager.hpp"
-#include "./system/logic/loop_manager.hpp"
+#include "./system/resorces/resorces_manager.hpp"
+#include "./system/logic/logic_manager.hpp"
 
 namespace conor {
 
@@ -13,13 +14,14 @@ namespace conor {
 class Game
 {
 public:
-    void Setup();
     void Start();
 
 private:
-    Graphics_manager renderer{};
-    Loop_manager looper{};
-    Resorces_manager resorcer{};
+    void Setup();
+
+    std::shared_ptr<Graphics_manager> renderer{};
+    std::shared_ptr<Logic_manager> looper{};
+    std::shared_ptr<Resorces_manager> resorcer{};
 };
 
 }

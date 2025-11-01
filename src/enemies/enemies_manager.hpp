@@ -14,6 +14,8 @@ namespace conor {
 class Enemies_manager: public Observer
 {
 public:
+    Enemies_manager() = default;
+
     void Add_enemy( std::shared_ptr<Enemy> &enemy );
     void Remove_enemy( std::shared_ptr<Enemy> &enemy );
     std::vector< std::weak_ptr<Enemy> > Get_enemies();

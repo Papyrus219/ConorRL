@@ -14,7 +14,7 @@ FetchContent_Declare(nlohmann_json
 
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 3.0.0
+    GIT_TAG 3.0.2
     GIT_SHALLOW ON)
 
 FetchContent_MakeAvailable(SFML nlohmann_json)

@@ -1,4 +1,5 @@
 #include "./graphics_manager.hpp"
+#include "../resorces/resorces_manager.hpp"
 #include <algorithm>
 #include <iostream>
 
@@ -13,11 +14,13 @@ void conor::Graphics_manager::Init_window(sf::Vector2u size)
     Set_view();
 }
 
-void conor::Graphics_manager::Generate_map(std::shared_ptr<Player> &player, std::vector< std::shared_ptr<Enemy> > *enemies, std::vector< std::shared_ptr<Item> > *items)
+void conor::Graphics_manager::Generate_map()
 {
-    map_generator.enemies = enemies;
-    map_generator.items = items;
-    map_generator.Generate(player);
+    std::shared_ptr<Player> player_tmp{};
+
+    map_generator.Generate(player_tmp);
+
+    resorcer->Set_player(player_tmp);
 }
 
 void conor::Graphics_manager::Set_view()
@@ -87,7 +90,7 @@ void conor::Graphics_manager::Render()
         }
     }
 
-    if(assign_player->Get_if_in_inventory()) Render_inventory();
+    if(resorcer->Get_player()->Get_if_in_inventory()) Render_inventory();
     Render_ui();
 
     window.display();
@@ -95,8 +98,7 @@ void conor::Graphics_manager::Render()
 
 void conor::Graphics_manager::Render_inventory()
 {
-    if(!assign_player) return;
-    auto inventory = assign_player->Get_const_inventory();
+    auto inventory = resorcer->Get_player()->Get_const_inventory();
 
     sf::Vector2u size = window.getSize();
     window.setView( window.getDefaultView() );
@@ -169,7 +171,7 @@ void conor::Graphics_manager::Render_inventory()
 
 void conor::Graphics_manager::Render_items(sf::Vector2u size, sf::Font font)
 {
-    auto inventory = assign_player->Get_const_inventory();
+    auto inventory = resorcer->Get_player()->Get_const_inventory();
     auto items = inventory->Get_items();
 
     float ITEM_SPACING = 60.f;
@@ -215,8 +217,8 @@ void conor::Graphics_manager::Render_items(sf::Vector2u size, sf::Font font)
 
 void conor::Graphics_manager::Render_equipment(sf::Vector2u size, sf::Font font)
 {
-    auto armor = assign_player->Get_const_armor();
-    auto weapon = assign_player->Get_const_weapon();
+    auto armor = resorcer->Get_player()->Get_const_armor();
+    auto weapon = resorcer->Get_player()->Get_const_weapon();
 
     float ITEM_SPACING = 100.f;
     float LEFT_MARGIN = (size.x*0.2) + 20.f;
@@ -258,7 +260,7 @@ void conor::Graphics_manager::Render_equipment(sf::Vector2u size, sf::Font font)
     }
     window.draw(weapon_name);
 
-    auto inventory = assign_player->Get_const_inventory();
+    auto inventory = resorcer->Get_player()->Get_const_inventory();
     switch(inventory->Get_selected_equipment_index())
     {
         case 0:
@@ -277,7 +279,7 @@ void conor::Graphics_manager::Render_equipment(sf::Vector2u size, sf::Font font)
 
 void conor::Graphics_manager::Render_stats(sf::Vector2u size, sf::Font font)
 {
-    auto stats = assign_player->stats;
+    auto stats = resorcer->Get_player()->stats;
 
     float ITEM_SPACING = 90.f;
     float LEFT_MARGIN = (size.x*0.2) + 20.f;
@@ -309,7 +311,7 @@ void conor::Graphics_manager::Render_ui()
 {
     window.setView( window.getDefaultView() );
 
-    auto stats = assign_player->stats;
+    auto stats = resorcer->Get_player()->stats;
     sf::Vector2u size = window.getSize();
 
     sf::Font font;
@@ -374,9 +376,3 @@ void conor::Graphics_manager::Set_path_to_enemies_stats(std::string path_to_enem
 {
     Board_generator::path_to_enemies_stats = path_to_enemies;
 }
-
-void conor::Graphics_manager::Set_player(std::shared_ptr<Player>& player)
-{
-    assign_player = player;
-}
-

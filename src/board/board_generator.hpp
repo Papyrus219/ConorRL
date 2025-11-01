@@ -11,6 +11,8 @@
 
 namespace conor {
 
+class Resorces_manager;
+
 /**
  * @todo write docs
  */
@@ -19,10 +21,8 @@ class Board_generator
 public:
     Board_generator(int map_heigh_, int map_width_, Board *map_);
     void Set_path_to_enemies_stats(std::string path_to_enemies);
-    std::vector< std::shared_ptr<Enemy>> Generate( std::shared_ptr<Player> &player);
-
-    static std::vector< std::shared_ptr<Enemy> > *enemies;
-    static std::vector< std::shared_ptr<Item> > *items;
+    void Set_resourcer(std::shared_ptr<Resorces_manager> resourcer_);
+    void Generate( std::shared_ptr<Player> &player);
 
 private:
     const int map_heigh{};
@@ -60,6 +60,8 @@ private:
         static Board* assigned_map;
         static bool is_player;
     };
+
+    static std::shared_ptr<Resorces_manager> resourcer;
 
     friend class Graphics_manager;
 };

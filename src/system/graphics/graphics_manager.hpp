@@ -10,7 +10,9 @@
 
 namespace conor {
 
-class Player;
+class Game;
+class Logic_manager;
+class Resorces_manager;
 
 /**
  * @todo write docs
@@ -23,9 +25,8 @@ public:
     void Update();
     void Resize();
     void onNotify(Event event, std::shared_ptr<Being> &entity) override;
-    void Generate_map(std::shared_ptr<Player> &player, std::vector< std::shared_ptr<Enemy> > *enemies, std::vector< std::shared_ptr<Item> > *items);
+    void Generate_map();
     void Set_path_to_enemies_stats(std::string path_to_enemies);
-    void Set_player(std::shared_ptr<Player> &players);
 
     Board map{};
     Tile_storage tile_storage{};
@@ -50,7 +51,10 @@ private:
     sf::Sprite drawer{tmp};
     Board_generator map_generator{100,100,&map};
 
-    std::shared_ptr<Player> assign_player{};
+    std::shared_ptr<Logic_manager> looper{};
+    std::shared_ptr<Resorces_manager> resorcer{};
+
+    friend class Game;
 };
 
 }
