@@ -1,7 +1,43 @@
 #include "input_handler.hpp"
+#include "../../system/logic/game_state.hpp"
 #include <iostream>
 
-void conor::Input_handler::Handle_input(sf::Keyboard::Key &key)
+void conor::Input_handler::Handle_input(sf::Keyboard::Key &key, Game_state game_state)
+{
+    switch(game_state)
+    {
+        case Game_state::main_menu:
+            Handle_input_main_menu(key);
+            break;
+        case Game_state::gameplay:
+            Handle_input_gameplay(key);
+            break;
+        default:
+            break;
+    }
+}
+
+void conor::Input_handler::Handle_input_main_menu(sf::Keyboard::Key& key)
+{
+    using sf::Keyboard::Key;
+
+    switch(key)
+    {
+        case Key::Up:
+            interacter->Main_menu_option_up(assigned_player);
+            break;
+        case Key::Down:
+            interacter->Main_menu_option_down(assigned_player);
+            break;
+        case Key::Enter:
+            interacter->Main_menu_option_execute(assigned_player);
+            break;
+        default:
+            break;
+    }
+}
+
+void conor::Input_handler::Handle_input_gameplay(sf::Keyboard::Key& key)
 {
     if(assigned_player->in_inventory)
     {
@@ -125,11 +161,5 @@ void conor::Input_handler::Handle_input_inventory_equipment(sf::Keyboard::Key& k
 
 void conor::Input_handler::Handle_input_inventory_stats(sf::Keyboard::Key& key)
 {
-    using sf::Keyboard::Key;
 
-    switch(key)
-    {
-        default:
-            break;
-    }
 }

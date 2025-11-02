@@ -28,7 +28,6 @@ public:
 
     std::shared_ptr<Logic_manager> looper{};
     std::shared_ptr<Graphics_manager> renderer{};
-
 private:
     std::shared_ptr<Player> player;
     std::shared_ptr<Enemies_manager> enemy_manager{};

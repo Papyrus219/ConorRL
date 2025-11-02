@@ -89,24 +89,13 @@ void conor::Path_finder::Move_enemies()
                 {
                     auto player = assign_board->entities_map[mov_y][mov_x].lock();
                     std::shared_ptr<Being> by_enemy = enemy;
+                    subject.Notify(Event::Enemy_attack,by_enemy);
                     by_enemy->Fight(player);
 
                     if(player->stats.curr_health <= 0)
                     {
                         std::cout << "You died!\n";
                         std::exit(0);
-                    }
-                    if(enemy->stats.curr_health <= 0)
-                    {
-                        if(assign_board->items_map[y][x].expired() && enemy->Get_drop_item())
-                        {
-                            enemy->Get_drop_item()->possition = {y,x};
-                            assign_board->items_map[y][x] = enemy->Get_drop_item();
-                        }
-                        subject.Notify(Event::Enemy_killed,by_enemy);
-
-                        assign_board->entities_map[y][x].reset();
-                        enemy_adr = assign_enemies->erase(enemy_adr);
                     }
 
                     min_dis = -1;

@@ -1,5 +1,6 @@
 #include "./graphics_manager.hpp"
 #include "../resorces/resorces_manager.hpp"
+#include "../logic/logic_manager.hpp"
 #include <algorithm>
 #include <iostream>
 
@@ -10,8 +11,6 @@ void conor::Graphics_manager::Init_window(sf::Vector2u size)
     window.create(sf::VideoMode{{size.x , size.y}}, "ConorRL",sf::Style::Titlebar | sf::Style::Close);
     render_area_start = {0,0};
     render_area_end = {static_cast<int> (size.x/100)+1 , static_cast<int>(size.y/100)+1 };
-
-    Set_view();
 }
 
 void conor::Graphics_manager::Generate_map()
@@ -37,22 +36,78 @@ void conor::Graphics_manager::Set_view()
     Update();
 }
 
-void conor::Graphics_manager::Resize()
+void conor::Graphics_manager::Render()
+{
+    window.clear();
+
+    switch(looper->game_state)
+    {
+        case Game_state::gameplay:
+            Render_game();
+            break;
+        case Game_state::main_menu:
+            Render_main_menu();
+            break;
+        case Game_state::ending:
+            //TO IMPLEMENT!
+            break;
+    }
+
+    window.display();
+}
+
+void conor::Graphics_manager::Render_main_menu()
 {
     sf::Vector2u size = window.getSize();
 
-    render_area_end = {static_cast<int> (size.x/100)+1 , static_cast<int>(size.y/100)+1 };
-    Set_view();
+    drawer.setTexture(main_menu_tex);
+    drawer.setTextureRect( { {0,0}, { static_cast<int>(main_menu_tex.getSize().x), static_cast<int>(main_menu_tex.getSize().y) }} );
+    window.draw(drawer);
+
+    sf::RectangleShape options_background{ {size.x*0.5f,size.y*0.4f} };
+    options_background.setPosition( {size.x*0.25f,size.y*0.5f} );
+    options_background.setFillColor( sf::Color{0,0,0,200} );
+    options_background.setOutlineColor( sf::Color::White );
+    options_background.setOutlineThickness( 4.f );
+
+    window.draw(options_background);
+
+    sf::Font font;
+    if(!font.openFromFile("../../data/fonts/font1.ttf"))
+    {
+        std::cerr << "Jesteś na steam decku!\n";
+    }
+
+    sf::Text start_text{font,"START",70};
+    start_text.setFillColor(sf::Color::Blue);
+    start_text.setPosition( {size.x*0.40f , size.y*0.5f + 20} );
+
+    sf::Text exit_text{font,"exit",50};
+    exit_text.setFillColor(sf::Color::Blue);
+    exit_text.setPosition( {size.x*0.46f, size.y*0.8f + 20} );
+
+    switch(looper->input_handler->interacter->Get_selected_main_menu_option())
+    {
+        case 0:
+            start_text.setFillColor(sf::Color::Cyan);
+            break;
+        case 1:
+            exit_text.setFillColor(sf::Color::Cyan);
+            break;
+    }
+
+    window.draw(start_text);
+    window.draw(exit_text);
 }
 
-void conor::Graphics_manager::Render()
+void conor::Graphics_manager::Render_game()
 {
+    Set_view();
     sf::Vector2f tile_size = static_cast<sf::Vector2f>( tile_storage.Get_tile_size() );
 
     int limiter_y = std::min( static_cast<int>( map.dungeon_map.size() ) , render_area_end.y );
     int limiter_x = std::min( static_cast<int>( map.dungeon_map[0].size() ), render_area_end.x );
 
-    window.clear();
     for(int y = render_area_start.y; y < limiter_y; y++)
     {
         for(int x = render_area_start.x; x < limiter_x; x++)
@@ -91,9 +146,9 @@ void conor::Graphics_manager::Render()
     }
 
     if(resorcer->Get_player()->Get_if_in_inventory()) Render_inventory();
+
     Render_ui();
 
-    window.display();
 }
 
 void conor::Graphics_manager::Render_inventory()
@@ -346,6 +401,7 @@ void conor::Graphics_manager::onNotify(Event event, std::shared_ptr<Being> &enti
     switch(event)
     {
         case Event::Player_moved:
+        {
             sf::Vector2u size = window.getSize();
             if(entity->possition.x >= render_area_end.x)
             {
@@ -368,6 +424,9 @@ void conor::Graphics_manager::onNotify(Event event, std::shared_ptr<Being> &enti
                 render_area_start.y -= static_cast<int>(size.y/100);
             }
 
+            break;
+        }
+        default:
             break;
     }
 }

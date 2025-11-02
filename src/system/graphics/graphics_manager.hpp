@@ -23,7 +23,6 @@ public:
     void Init_window(sf::Vector2u size);
     void Render();
     void Update();
-    void Resize();
     void onNotify(Event event, std::shared_ptr<Being> &entity) override;
     void Generate_map();
     void Set_path_to_enemies_stats(std::string path_to_enemies);
@@ -38,6 +37,8 @@ public:
 private:
     void Set_view();
 
+    void Render_game();
+    void Render_main_menu();
     void Render_inventory();
     void Render_items(sf::Vector2u size, sf::Font font);
     void Render_equipment(sf::Vector2u size, sf::Font font);
@@ -47,8 +48,8 @@ private:
     sf::Vector2i render_area_start{};
     sf::Vector2i render_area_end{};
 
-    sf::Texture tmp{};
-    sf::Sprite drawer{tmp};
+    sf::Texture main_menu_tex{};
+    sf::Sprite drawer{main_menu_tex};
     Board_generator map_generator{100,100,&map};
 
     std::shared_ptr<Logic_manager> looper{};

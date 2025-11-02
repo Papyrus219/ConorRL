@@ -5,8 +5,11 @@ namespace conor
 {
     enum class Event
     {
-        Player_moved=0,
-        Enemy_killed=1
+        Game_started=0,
+        Player_moved=1,
+        Enemy_killed=2,
+        Enemy_attack=3,
+        Player_atack=4
     };
 }
 

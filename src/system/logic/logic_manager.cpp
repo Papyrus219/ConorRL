@@ -26,7 +26,19 @@ void conor::Logic_manager::Events()
         else if (auto key_pressed = event->getIf<sf::Event::KeyPressed>())
         {
             sf::Keyboard::Key key = key_pressed->code;
-            input_handler->Handle_input(key);
+            input_handler->Handle_input(key,game_state);
         }
+    }
+}
+
+void conor::Logic_manager::onNotify(Event event, std::shared_ptr<Being>& entity)
+{
+    switch(event)
+    {
+        case Event::Game_started:
+            game_state = Game_state::gameplay;
+            break;
+        default:
+            break;
     }
 }

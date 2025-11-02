@@ -73,6 +73,8 @@ void conor::Player_interacter::Attack_melee(std::shared_ptr<Player> player, sf::
         return;
     }
 
+    std::shared_ptr<Being> being{};
+    subject.Notify(Event::Player_atack,being);
     player->Fight(assign_board->entities_map[atack_possition.y][atack_possition.x].lock());
 
     if(assign_board->entities_map[atack_possition.y][atack_possition.x].lock()->stats.curr_health <= 0)
@@ -149,5 +151,33 @@ void conor::Player_interacter::Dequip_selected_item(std::shared_ptr<Player> play
         case 1:
             player->Dequip(player->Get_const_weapon());
             break;
+    }
+}
+
+void conor::Player_interacter::Main_menu_option_up(std::shared_ptr<Player>)
+{
+    if(selected_main_menu_option > 0) selected_main_menu_option--;
+}
+
+void conor::Player_interacter::Main_menu_option_down(std::shared_ptr<Player> player)
+{
+    if(selected_main_menu_option < 1) selected_main_menu_option++;
+}
+
+void conor::Player_interacter::Main_menu_option_execute(std::shared_ptr<Player> player)
+{
+    switch(selected_main_menu_option)
+    {
+        case 0:
+        {
+            std::shared_ptr<Being> tmp{};
+            subject.Notify(Event::Game_started, tmp);
+            break;
+        }
+        case 1:
+        {
+            std::exit(0);
+            break;
+        }
     }
 }

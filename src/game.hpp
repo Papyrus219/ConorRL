@@ -5,6 +5,7 @@
 #include "./system/graphics/graphics_manager.hpp"
 #include "./system/resorces/resorces_manager.hpp"
 #include "./system/logic/logic_manager.hpp"
+#include "./system/audio/audio_manager.hpp"
 
 namespace conor {
 
@@ -22,6 +23,7 @@ private:
     std::shared_ptr<Graphics_manager> renderer{};
     std::shared_ptr<Logic_manager> looper{};
     std::shared_ptr<Resorces_manager> resorcer{};
+    std::shared_ptr<Audio_manager> audier{};
 };
 
 }
